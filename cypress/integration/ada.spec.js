@@ -1,7 +1,11 @@
 describe("Homepage", () => {
-    const texts = [];
 
-    it.skip("Check homepage", () => {
+    before(function () {
+        cy.visit("https://ei-uat.bidgely.com/dashboard?user-hash=1637240649329v1GnBStFGiVXiesZCgANGEQL7VXd4Yq14ilF6TuWsETyR6R3xAUCiHR6PYERYyErlyp6WPZPPsOBwhtdwRE1ScbQ==")
+        cy.injectAxe();
+    });
+
+    it("Check homepage", () => {
         cy.visit("https://nsp-nonprodqa.bidgely.com/dashboard?user-hash=1628514825184v1HiaTjgQU1MW4SKNeRD91IWF7l1vHXbwgroXtFEhDsNrWhRZAud6ZpQ1qhV91wqfFqY6F72nPe6MIHsbbjCDKjw==")
         // cy.title( { timeout: 10000 }).should('eq', 'scgnonprodqa.bidgely.com/')
         // cy.wait(10000)
@@ -48,4 +52,8 @@ describe("Homepage", () => {
         // first a11y test
         cy.checkA11y('');
     })
+    it.only("Accessibility Test Case - Custom Command", function () {
+        cy.wait(10000)
+        cy.customCheckAlly();
+  });
 })
