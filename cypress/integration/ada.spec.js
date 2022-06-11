@@ -53,7 +53,7 @@ describe("Homepage", () => {
         cy.checkA11y('');
     })
     it.only("Accessibility Test Case - Custom Command", function () {
-        cy.wait(10000)
+        cy.get('.chart-container.chart-filter', {timeout:20000}).should('be.visible')
         cy.customCheckAlly();
   });
 })
