@@ -9,4 +9,19 @@ describe("GB download", () => {
         cy.get('.download-page-btn.gb-export-btn',{timeout:10000}).click()
         cy.get('.gb-download-msg',{timeout:10000}).should('have.text', 'GreenButton data downloaded successfully.')
     })
+    it("Upload data", () => {
+        cy.visit("https://dmdvalidator.greenbuttonalliance.org/")
+        cy.get('#FBSelection',{timeout:10000}).should('be.visible')
+        cy.get('select').select('Energy Usage file: Electricity Interval Metering')
+        cy.wait(200)
+        cy.get('#FB_15').uncheck({force:true})
+        cy.wait(500)
+        //file to be uploaded path in project folder
+        const p = 'UsageData-05-13-2022.xml'
+        //upload file with attachFile
+        cy.get('#dropZone')
+        .attachFile(p, { subjectType: 'drag-n-drop' });
+        cy.get(':nth-child(6) > thead > tr > td', {timeout:15000}).should('have.text', ' ...all tests were successful.')
+
+    })
 })
