@@ -11,6 +11,7 @@
     "axe-core": "^4.4.2",
     "cypress": "^9.7.0",
     "cypress-axe": "^0.14.0",
+    "cypress-downloadfile": "^1.2.2",
     "cypress-file-upload": "^5.0.8"
   },
   "scripts": {
