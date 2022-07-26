@@ -31,4 +31,11 @@ module.exports = (on, config) => {
   module.exports = (on, config) => {
     on('task', {downloadFile})
   }
+
+  const fs = require('fs');
+  on('task', {
+    downloads:  (downloadspath) => {
+      return fs.readdirSync(downloadspath)
+    }
+  })
 }
