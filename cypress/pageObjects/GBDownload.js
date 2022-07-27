@@ -8,7 +8,10 @@ class GBDownload {
     dropdownEle = '.MuiSelect-root'
     dropdownList = '#menu- > .MuiPaper-root > .MuiList-root li'
     exportBtn = '.download-page-btn.gb-export-btn'
+    downloadPageBtn = '.download-page-btn'
     gbDownloadMsg = '.gb-download-msg'
+    fromDate = '[name="From"]'
+    toDate = '[name="To"]'
 
 
     verifyPageTitle() {
@@ -38,6 +41,10 @@ class GBDownload {
 
     clickExport() {
         cy.get(this.exportBtn,{timeout:10000}).click()
+    }
+
+    clickCancelBtn() {
+        cy.get(this.downloadPageBtn).contains('Cancel').click()
     }
 
     checkSuccessMsg() {
