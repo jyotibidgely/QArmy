@@ -12,6 +12,8 @@ class GBDownload {
     gbDownloadMsg = '.gb-download-msg'
     fromDate = '[name="From"]'
     toDate = '[name="To"]'
+    validationMsg = 'p.Mui-error'
+    calendarIcon = '.bidgely-icon-calendar'
 
 
     verifyPageTitle() {
@@ -36,7 +38,7 @@ class GBDownload {
 
     selectDropdownElement() {
         cy.get(this.dropdownEle).click()
-        cy.get(this.dropdownList).eq(4).click()
+        cy.get(this.dropdownList).eq(5).click()
     }
 
     clickExport() {
@@ -47,8 +49,20 @@ class GBDownload {
         cy.get(this.downloadPageBtn).contains('Cancel').click()
     }
 
-    checkSuccessMsg() {
-        cy.get(this.gbDownloadMsg,{timeout:10000}).should('have.text', 'GreenButton data downloaded successfully.')
+    checkSuccessMsg(successMsg) {
+        cy.get(this.gbDownloadMsg,{timeout:10000}).should('have.text', successMsg)
+    }
+
+    enterFromDate(strFromDate) {
+        cy.get(this.fromDate).clear().type(strFromDate)
+    }
+
+    enterToDate(strToDate) {
+        cy.get(this.toDate).clear().type(strToDate)
+    }
+
+    checkErrorMsg(errorMsg) {
+        cy.get(this.validationMsg).should('have.text', errorMsg)
     }
 }
 

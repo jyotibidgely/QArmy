@@ -9,6 +9,13 @@ class genericPage {
     clickMenuBtn() {
         cy.get(this.hamburgerMenuBtn).click()
     }
+
+    changDateFormat(current_datetime) {
+        const moment = require('moment');
+        var dateString = moment(current_datetime).format("MM/DD/YYYY");
+        console.log(dateString)
+        return dateString
+    }
 }
 
 export default genericPage;

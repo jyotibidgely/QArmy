@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "axe-core": "^4.4.2",
-    "cypress-axe": "^0.14.0"
+    "cypress-axe": "^0.14.0",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "axe-core": "^4.4.2",
