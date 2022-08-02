@@ -16,26 +16,36 @@
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
+const path = require("path");
+const fsExtra = require("fs-extra");
+const {downloadFile} = require('cypress-downloadfile/lib/addPlugin')
+const fs = require('fs');
+
+function getConfigurationByFile(file) {
+  const pathToConfigFile = path.resolve("cypress/config", `${file}.json`);
+  console.log('second')
+  return fsExtra.readJson(pathToConfigFile);
+}
+
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   on('task', {
     log(message) {
       console.log(message)
-  
       return null
     },
   })
 
-  const {downloadFile} = require('cypress-downloadfile/lib/addPlugin')
-  module.exports = (on, config) => {
-    on('task', {downloadFile})
-  }
+  on('task', {downloadFile})
 
-  const fs = require('fs');
   on('task', {
     downloads:  (downloadspath) => {
       return fs.readdirSync(downloadspath)
     }
   })
+
+  const file = config.env.configFile || "uat";
+  console.log('first')
+  return getConfigurationByFile(file);
 }
