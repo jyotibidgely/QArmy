@@ -6,6 +6,7 @@ describe("GB download", () => {
     const objGbDownload = new GBDownload()
     const utility = 'ameren'
     const pilotData = Cypress.env(utility)
+    var objLength
     var billingStartTs
     var billingEndTs
     var strStartDate
@@ -19,7 +20,7 @@ describe("GB download", () => {
     var arrValues = []
     var strObj = ''
     var meterToken
-    const uuid = 'ac7951ce-0474-4946-be0c-0539d1d767bc'
+    const uuid = '32b638d1-ceb2-4d3b-9091-981f34c263f9'
     var bearerToken
     var userHash
     var baseUrl = Cypress.env('baseURL')
@@ -53,8 +54,9 @@ describe("GB download", () => {
                 expect(Response.status).to.eq(200)
                 let res = Response.body
                 cy.log(res)
-                var objLength = Object.keys(res).length;
-                var firstKey = Object.keys(res)[objLength - 3];
+                objLength = Object.keys(res).length;
+                cy.log(objLength)
+                var firstKey = Object.keys(res)[objLength - 1];
                 let objData = res[firstKey]
                 cy.log(objData)
 
@@ -99,12 +101,16 @@ describe("GB download", () => {
         cy.wait(1000)
     })
     it("Export data - Bill period", () => {
+        var billPeriodStartDate = objGenericPage.changDateFormatString(strStartDate)
+        var billPeriodEndDate = objGenericPage.changDateFormatString(strEndDate)
+        var strBillPeriodDate = billPeriodStartDate + ' - ' + billPeriodEndDate
+        cy.log(strBillPeriodDate)
         objGbDownload.verifyPageTitle();
         objGbDownload.verifySubtitle()
         objGbDownload.verifyExportBillLabel()
         objGbDownload.verifyExportDaysLabel()
         objGbDownload.verifyDataMsg()
-        objGbDownload.selectDropdownElement()
+        objGbDownload.selectDropdownElement(strBillPeriodDate, objLength)
 
         cy.get(objGbDownload.exportBtn)
             .should('have.css', 'background-color')
@@ -143,11 +149,13 @@ describe("GB download", () => {
         objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
         cy.wait(500)
 
+        //Min and max dates
         objGbDownload.enterFromDate(strMinDate)
         objGbDownload.enterToDate(strEndDate)
         objGbDownload.clickExport()
         objGbDownload.checkSuccessMsg('Please select a date range that does not exceed one year.')
 
+        //Same date
         objGbDownload.enterFromDate(strStartDate)
         objGbDownload.enterToDate(strStartDate)
         objGbDownload.clickExport()

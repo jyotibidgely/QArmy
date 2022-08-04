@@ -36,9 +36,10 @@ class GBDownload {
         cy.get(this.dataMsg).should('have.text', 'Data will be downloaded in a xml file.')
     }
 
-    selectDropdownElement() {
+    selectDropdownElement(strDate, intLength) {
         cy.get(this.dropdownEle).click()
-        cy.get(this.dropdownList).eq(5).click()
+        cy.get(this.dropdownList).should('have.length', intLength)
+        cy.get(this.dropdownList).contains(strDate).click()
     }
 
     clickExport() {

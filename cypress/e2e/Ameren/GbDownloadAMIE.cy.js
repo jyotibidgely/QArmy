@@ -6,6 +6,7 @@ describe("GB download", () => {
     const objGbDownload = new GBDownload()
     const utility = 'ameren'
     const pilotData = Cypress.env(utility)
+    var objLength
     var billingStartTs
     var billingEndTs
     var strStartDate
@@ -14,6 +15,7 @@ describe("GB download", () => {
     var newEpochStartTs
     var strNewEndDate
     var newEpochEndTs
+    var strMinDate
     var arrValues = []
     var strObj = ''
     var meterToken
@@ -51,10 +53,17 @@ describe("GB download", () => {
                 expect(Response.status).to.eq(200)
                 let res = Response.body
                 cy.log(res)
-                var objLength = Object.keys(res).length;
+                objLength = Object.keys(res).length;
                 var firstKey = Object.keys(res)[objLength - 1];
                 let objData = res[firstKey]
                 cy.log(objData)
+
+                var objFirst = Object.keys(res)[0]
+                var firstObjData = res[objFirst]
+                var firstBillingStartTs = firstObjData['billingStartTs']
+                var firstStartTs = new Date(firstBillingStartTs * 1000);
+                strMinDate = objGenericPage.changDateFormat(firstStartTs.toDateString())
+
                 billingEndTs = objData['billingEndTs']
                 billingStartTs = objData['billingStartTs']
                 cy.log(billingStartTs)
@@ -91,12 +100,16 @@ describe("GB download", () => {
         cy.wait(1000)
     })
     it("Export data - Bill period", () => {
+        var billPeriodStartDate = objGenericPage.changDateFormatString(strStartDate)
+        var billPeriodEndDate = objGenericPage.changDateFormatString(strEndDate)
+        var strBillPeriodDate = billPeriodStartDate + ' - ' + billPeriodEndDate
+        cy.log(strBillPeriodDate)
         objGbDownload.verifyPageTitle();
         objGbDownload.verifySubtitle()
         objGbDownload.verifyExportBillLabel()
         objGbDownload.verifyExportDaysLabel()
         objGbDownload.verifyDataMsg()
-        objGbDownload.selectDropdownElement()
+        objGbDownload.selectDropdownElement(strBillPeriodDate, objLength)
 
         cy.get(objGbDownload.exportBtn)
             .should('have.css', 'background-color')
@@ -117,19 +130,54 @@ describe("GB download", () => {
         objGbDownload.clickExport()
         objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
     })
+
+    it("Export data - Calendar Days", () => {
+        cy.contains('Export usage for range of days').click()
+        cy.wait(200)
+        cy.get(objGbDownload.calendarIcon).eq(0).should('be.visible')
+        cy.get(objGbDownload.calendarIcon).eq(1).should('be.visible')
+        
+        cy.get(objGbDownload.calendarIcon).eq(0).click()
+        cy.get('[aria-label="Go to the previous month"]').click()
+        cy.get('[role="presentation"]').eq(10).click()
+
+        cy.get(objGbDownload.calendarIcon).eq(1).click()
+        cy.get('[aria-label="Go to the previous month"]').click()
+        cy.get('[role="presentation"]').eq(11).click()
+        objGbDownload.clickExport()
+        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
+        cy.wait(500)
+
+        //Min and max dates
+        objGbDownload.enterFromDate(strMinDate)
+        objGbDownload.enterToDate(strEndDate)
+        objGbDownload.clickExport()
+        objGbDownload.checkSuccessMsg('Please select a date range that does not exceed one year.')
+
+        //Same date
+        objGbDownload.enterFromDate(strStartDate)
+        objGbDownload.enterToDate(strStartDate)
+        objGbDownload.clickExport()
+        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
+    })
+
     it("Export data - Days", () => {
         cy.log('Start date - ' + strStartDate)
 
         cy.contains('Export usage for range of days').click()
         objGbDownload.enterFromDate('16/09/20')
         objGbDownload.checkErrorMsg('Invalid Date Format')
-        objGbDownload.enterFromDate('03/02/2020')
+        objGbDownload.enterFromDate('03/02/2003')
         objGbDownload.checkErrorMsg('Date should not be before minimal date')
+        // objGbDownload.enterFromDate('08/05/2032')
+        // objGbDownload.checkErrorMsg('Date should not be after maximal date')
         objGbDownload.enterFromDate(strNewStartDate)
         objGbDownload.enterToDate('56/09/2022')
         objGbDownload.checkErrorMsg('Invalid Date Format')
-        objGbDownload.enterToDate('08/05/2022')
+        objGbDownload.enterToDate('08/05/2032')
         objGbDownload.checkErrorMsg('Date should not be after maximal date')
+        // objGbDownload.enterToDate('03/02/2003')
+        // objGbDownload.checkErrorMsg('Date should not be before minimal date')
         objGbDownload.enterToDate(strNewEndDate)
         objGbDownload.clickExport()
         objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')

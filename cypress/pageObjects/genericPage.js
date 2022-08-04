@@ -16,6 +16,13 @@ class genericPage {
         console.log(dateString)
         return dateString
     }
+
+    changDateFormatString(current_datetime) {
+        const moment = require('moment');
+        var dateString = moment(current_datetime).format("MMM D, YYYY");
+        console.log(dateString)
+        return dateString
+    }
 }
 
 export default genericPage;
