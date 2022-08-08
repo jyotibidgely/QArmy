@@ -12,6 +12,15 @@ describe("GB download", () => {
     const uuid1BC = '91b88225-e17a-4778-b0c3-13cd0dd6f99d'
     const uuidNoRaw = '53fe484b-f702-4c73-9779-c04aa9c6d100'
     const uuid1Raw = 'b088ba64-0738-4768-b990-2cee740a36c3'
+    const uuidZeroCost = 'f44aaaf5-cb4a-41e0-8104-be520b1ebaec'
+    const uuidNegativeValuesRAW = 'b02363df-62d3-4d4a-af2a-9b90f339c276'
+    const uuidNegativeValuesInvoice = '95e62c50-3c50-4a72-8fe1-5502367bfacc'
+    const uuidZeroConsumption = '5a059e56-f477-4d7f-85de-1a7b06b337e7'
+    const uuidOverlappingBcOne = '581da838-8e14-42c9-b18c-17dacaf069a3'
+    const uuidOverlappingBcTwo = '6f398be6-de38-4dcc-a27c-04d4635559f8'
+    const uuidShorterBc = '6f398be6-de38-4dcc-a27c-04d4635559f8'
+    const uuidAmrE = '4b315c75-64f1-4b04-bc92-c64825a9cb0b'
+    const uuidAmiE = '56ecde20-b0d3-42e9-9a65-5ea4d6adebb8'
     var bearerToken
     var userHash
     var baseUrl = Cypress.env('baseURL')
@@ -33,6 +42,42 @@ describe("GB download", () => {
 
     it("Navigate to Download my data & Export data - One Raw", () => {
         generateUrl(uuid1Raw)
+    })
+
+    it("Navigate to Download my data & Export data - Zero cost Raw data", () => {
+        generateUrl(uuidZeroCost)
+    })
+
+    it("Navigate to Download my data & Export data - Negative consumption", () => {
+        generateUrl(uuidNegativeValuesRAW)
+    })
+
+    it("Navigate to Download my data & Export data - Negative billing", () => {
+        generateUrl(uuidNegativeValuesInvoice)
+    })
+
+    it("Navigate to Download my data & Export data - Zero Consumption RAW", () => {
+        generateUrl(uuidZeroConsumption)
+    })
+
+    it("Navigate to Download my data & Export data - Overlapping BillCycle One", () => {
+        generateUrl(uuidOverlappingBcOne)
+    })
+
+    it("Navigate to Download my data & Export data - Overlapping BillCycle Two", () => {
+        generateUrl(uuidOverlappingBcTwo)
+    })
+
+    it("Navigate to Download my data & Export data - Shorter BillCycle", () => {
+        generateUrl(uuidShorterBc)
+    })
+
+    it("Navigate to Download my data & Export data - AMR E", () => {
+        generateUrl(uuidAmrE)
+    })
+
+    it("Navigate to Download my data & Export data - AMI E", () => {
+        generateUrl(uuidAmiE)
     })
 
     function generateUrl(uuid) {
