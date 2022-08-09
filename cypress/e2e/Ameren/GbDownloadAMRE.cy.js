@@ -96,9 +96,7 @@ describe("GB download - AMR Electric", () => {
     it("Navigate to Download my data", () => {
         objGenericPage.checkHeader()
         cy.wait(1000)
-        objGenericPage.clickMenuBtn()
-        cy.wait(1000)
-        cy.get('.MuiList-root > [href="/dashboard/gb-download"]').click()
+        objGenericPage.clickDownloadMyData()
         cy.wait(1000)
     })
     it("Export data - Bill period", () => {

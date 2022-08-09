@@ -130,9 +130,7 @@ describe("GB download - Negative Tests", () => {
 
                 objGenericPage.checkHeader()
                 cy.wait(1000)
-                objGenericPage.clickMenuBtn()
-                cy.wait(1000)
-                cy.get('.MuiList-root > [href="/dashboard/gb-download"]').click()
+                objGenericPage.clickDownloadMyData()
                 cy.wait(1000)
                 var billPeriodStartDateTwo = objGenericPage.changDateFormatString(strMinStartDate)
                 var billPeriodEndDateTwo = objGenericPage.changDateFormatString(strMinEndDate)

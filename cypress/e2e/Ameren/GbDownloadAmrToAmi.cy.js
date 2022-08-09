@@ -49,9 +49,7 @@ describe("GB download - AMR To AMI Electric", () => {
                 cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
                 objGenericPage.checkHeader()
                 cy.wait(1000)
-                objGenericPage.clickMenuBtn()
-                cy.wait(1000)
-                cy.get('.MuiList-root > [href="/dashboard/gb-download"]').click()
+                objGenericPage.clickDownloadMyData()
                 cy.wait(1000)
                 invoiceResponse(uuid)
             })
@@ -98,12 +96,18 @@ describe("GB download - AMR To AMI Electric", () => {
                         objGbDownload.selectDropdownElement(strBillPeriodDate, objLength)
                         objGbDownload.clickExport()
                         objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
+                        cy.wait(1000)
+                        cy.contains('Export usage for range of days').click()
+                        objGbDownload.enterFromDate(strMinStartDate)
+                        objGbDownload.enterToDate(strMinEndDate)
+                        objGbDownload.clickExport()
+                        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
                     }
                     else if (firstObjData['userType'] == 'GB' && checkOnceAmi) {
                         cy.log('AMI meter')
                         isAmiUser = true
                         checkOnceAmi = false
-
+                        cy.reload()
                         let firstBillingStartTsAmi = firstObjData['billingStartTs']
                         let firstBillingEndTsAmi = firstObjData['billingEndTs']
                         let firstStartTsAmi = new Date(firstBillingStartTsAmi * 1000);
@@ -117,6 +121,12 @@ describe("GB download - AMR To AMI Electric", () => {
                         let strBillPeriodDateAmi = billPeriodStartDateTwoAmi + ' - ' + billPeriodEndDateTwoAmi
                         cy.log(strBillPeriodDateAmi)
                         objGbDownload.selectDropdownElement(strBillPeriodDateAmi, objLength)
+                        objGbDownload.clickExport()
+                        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
+                        cy.wait(1000)
+                        cy.contains('Export usage for range of days').click()
+                        objGbDownload.enterFromDate(strMinStartDateAmi)
+                        objGbDownload.enterToDate(strMinEndDateAmi)
                         objGbDownload.clickExport()
                         objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
                     }
