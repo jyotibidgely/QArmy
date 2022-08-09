@@ -1,7 +1,7 @@
 import GBDownload from "../../pageObjects/GBDownload"
 import genericPage from "../../pageObjects/genericPage"
 
-describe("GB download", () => {
+describe("GB download - AMR Electric", () => {
     const objGenericPage = new genericPage()
     const objGbDownload = new GBDownload()
     const utility = 'ameren'
@@ -21,6 +21,7 @@ describe("GB download", () => {
     var strObj = ''
     var meterToken
     const uuid = '32b638d1-ceb2-4d3b-9091-981f34c263f9'
+    var strMeasurementType = 'ELECTRIC'
     var bearerToken
     var userHash
     var baseUrl = Cypress.env('baseURL')
@@ -47,7 +48,7 @@ describe("GB download", () => {
         cy.log(bearerToken)
         cy.request({
             method: 'GET',
-            url: baseUrl + '/billingdata/users/' + uuid + '/homes/1/utilitydata?t0=1&t1=1906986799&measurementType=ELECTRIC',
+            url: baseUrl + '/billingdata/users/' + uuid + '/homes/1/utilitydata?t0=1&t1=1906986799&measurementType='+strMeasurementType,
             headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
         })
             .then((Response) => {

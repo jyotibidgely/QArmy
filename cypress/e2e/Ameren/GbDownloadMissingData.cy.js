@@ -1,7 +1,7 @@
 import GBDownload from "../../pageObjects/GBDownload"
 import genericPage from "../../pageObjects/genericPage"
 
-describe("GB download", () => {
+describe("GB download - Negative Tests", () => {
     const objGenericPage = new genericPage()
     const objGbDownload = new GBDownload()
     const utility = 'ameren'
@@ -21,6 +21,8 @@ describe("GB download", () => {
     const uuidShorterBc = '6f398be6-de38-4dcc-a27c-04d4635559f8'
     const uuidAmrE = '4b315c75-64f1-4b04-bc92-c64825a9cb0b'
     const uuidAmiE = '56ecde20-b0d3-42e9-9a65-5ea4d6adebb8'
+    const uuidNoInvoice = '193155f8-c2af-4bdf-a749-c4dee1254012'
+    const uuidAmrAmiHistData = 'efdd88eb-d301-43fa-8649-e1dcf8039ed0'
     var bearerToken
     var userHash
     var baseUrl = Cypress.env('baseURL')
@@ -78,6 +80,14 @@ describe("GB download", () => {
 
     it("Navigate to Download my data & Export data - AMI E", () => {
         generateUrl(uuidAmiE)
+    })
+
+    it("Navigate to Download my data & Export data - No Invoice data", () => {
+        generateUrl(uuidNoInvoice)
+    })
+
+    it("Navigate to Download my data & Export data - AMR-AMI Historical data", () => {
+        generateUrl(uuidAmrAmiHistData)
     })
 
     function generateUrl(uuid) {

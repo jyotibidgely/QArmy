@@ -1,7 +1,7 @@
 import GBDownload from "../../pageObjects/GBDownload"
 import genericPage from "../../pageObjects/genericPage"
 
-describe("GB download", () => {
+describe("GB download - AMR To AMI Electric", () => {
     const objGenericPage = new genericPage()
     const objGbDownload = new GBDownload()
     const utility = 'ameren'
@@ -23,6 +23,15 @@ describe("GB download", () => {
 
     it("Navigate to Download my data & Export data - 1 BC missing", () => {
         generateUrl(uuidAmrToAmi)
+    })
+
+    it('Read download file', () => {
+        cy.task('downloads', 'cypress/downloads').then(after => {
+            console.log(after)
+            cy.readFile("cypress/downloads/" + after).then(fileToRead => {
+                cy.wrap(fileToRead).should('contain', '_AMR:inactive')
+            }) 
+        })
     })
 
     function generateUrl(uuid) {
