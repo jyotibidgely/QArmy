@@ -1,7 +1,7 @@
-import GBDownload from "../../pageObjects/GBDownload"
-import genericPage from "../../pageObjects/genericPage"
+import GBDownload from "../../../pageObjects/GBDownload"
+import genericPage from "../../../pageObjects/genericPage"
 
-describe("GB download - AMR Electric", () => {
+describe("GB download - AMR Gas", () => {
     const objGenericPage = new genericPage()
     const objGbDownload = new GBDownload()
     const utility = 'ameren'
@@ -20,8 +20,8 @@ describe("GB download - AMR Electric", () => {
     var arrValues = []
     var strObj = ''
     var meterToken
-    const uuid = '32b638d1-ceb2-4d3b-9091-981f34c263f9'
-    var strMeasurementType = 'ELECTRIC'
+    const uuid = 'f11f1157-ca75-4e88-8642-821dd69d81c3'
+    var strMeasurementType = 'GAS'
     var bearerToken
     var userHash
     var baseUrl = Cypress.env('baseURL')
@@ -197,7 +197,7 @@ describe("GB download - AMR Electric", () => {
     it('Fetch values from RAW data', () => {
         cy.request({
             method: 'GET',
-            url: baseUrl + '/streams/users/' + uuid + '/homes/1/gws/3/meters/1/gb.json?t0=' + billingStartTs + '&t1=' + newEpochEndTs,
+            url: baseUrl + '/streams/users/' + uuid + '/homes/1/gws/4/meters/1/gb.json?t0=' + billingStartTs + '&t1=' + newEpochEndTs,
             headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
         })
             .then((Response) => {
@@ -214,11 +214,13 @@ describe("GB download - AMR Electric", () => {
                     const time = element['time']
                     var value = element['value']
                     const duration = element['duration']
-                    value = Math.round(value)
+                    value = Math.trunc(value)
+                    value = Math.round(value/10000)*10000
+                    value = value/3;
                     cy.log(value)
                     strObj = '<espi:IntervalReading><espi:ReadingQuality><espi:quality>17</espi:quality></espi:ReadingQuality><espi:timePeriod><espi:duration>' + duration + '</espi:duration><espi:start>' + time + '</espi:start></espi:timePeriod><espi:value>' + value + '</espi:value></espi:IntervalReading>'
                     arrValues.push(strObj)
-                    // console.log(strObj)
+                    console.log(strObj)
 
                 }
             })
@@ -227,14 +229,14 @@ describe("GB download - AMR Electric", () => {
     it('Fetch values from Meter API', () => {
         cy.request({
             method: 'GET',
-            url: baseUrl + '/meta/users/' + uuid + '/homes/1/gws/3/meters',
+            url: baseUrl + '/meta/users/' + uuid + '/homes/1/gws/4/meters',
             headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
         })
             .then((Response) => {
                 expect(Response.status).to.eq(200)
                 let res = Response.body
                 cy.log(res)
-                var strMeterObj = '/users/' + uuid + '/homes/1/gws/3/meters/1'
+                var strMeterObj = '/users/' + uuid + '/homes/1/gws/4/meters/1'
                 var meterObj = res[strMeterObj]
                 meterToken = meterObj.token
                 cy.log(meterToken)
@@ -247,7 +249,7 @@ describe("GB download - AMR Electric", () => {
             console.log(strObj)
             cy.readFile("cypress/downloads/" + after).then(fileToRead => {
                 cy.wrap(fileToRead).should('contain', 'Green Button Data File. Meter: ' + meterToken)
-                cy.wrap(fileToRead).should('contain', '<espi:ReadingType><espi:accumulationBehaviour>4</espi:accumulationBehaviour><espi:commodity>1</espi:commodity><espi:dataQualifier>12</espi:dataQualifier><espi:defaultQuality>17</espi:defaultQuality><espi:flowDirection>1</espi:flowDirection><espi:intervalLength>86400</espi:intervalLength><espi:kind>12</espi:kind><espi:phase>769</espi:phase><espi:powerOfTenMultiplier>0</espi:powerOfTenMultiplier><espi:timeAttribute>0</espi:timeAttribute><espi:uom>72</espi:uom></espi:ReadingType>')
+                cy.wrap(fileToRead).should('contain', '<espi:ReadingType><espi:accumulationBehaviour>4</espi:accumulationBehaviour><espi:commodity>7</espi:commodity><espi:dataQualifier>12</espi:dataQualifier><espi:defaultQuality>17</espi:defaultQuality><espi:flowDirection>1</espi:flowDirection><espi:intervalLength>86400</espi:intervalLength><espi:kind>58</espi:kind><espi:phase>769</espi:phase><espi:powerOfTenMultiplier>-3</espi:powerOfTenMultiplier><espi:timeAttribute>0</espi:timeAttribute><espi:uom>119</espi:uom></espi:ReadingType>')
                 for (let index = 0; index < arrValues.length; index++) {
                     const element = arrValues[index];
                     console.log(element)

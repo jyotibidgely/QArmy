@@ -1,5 +1,5 @@
-import GBDownload from "../../pageObjects/GBDownload"
-import genericPage from "../../pageObjects/genericPage"
+import GBDownload from "../../../pageObjects/GBDownload"
+import genericPage from "../../../pageObjects/genericPage"
 
 describe("GB download - Multimeter Tests", () => {
     const objGenericPage = new genericPage()
