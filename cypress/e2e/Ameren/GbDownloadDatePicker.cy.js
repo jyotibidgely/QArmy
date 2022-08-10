@@ -14,15 +14,9 @@ describe("GB download - Date picker", () => {
     const uuidAMREToAMRS = 'ed720f86-8c63-4686-9736-5c1b784b6ca8'
     const uuidAMIEToAMIS = '7a55d084-2c48-4784-a08d-d6c0b3e5d470'
     const uuidAMRToAMISolar = 'd372521c-543d-4f51-802a-96938b7b5158'
-    const uuidNegativeValuesInvoice = '95e62c50-3c50-4a72-8fe1-5502367bfacc'
-    const uuidZeroConsumption = '5a059e56-f477-4d7f-85de-1a7b06b337e7'
-    const uuidOverlappingBcOne = '581da838-8e14-42c9-b18c-17dacaf069a3'
-    const uuidOverlappingBcTwo = '6f398be6-de38-4dcc-a27c-04d4635559f8'
-    const uuidShorterBc = '6f398be6-de38-4dcc-a27c-04d4635559f8'
-    const uuidAmrE = '4b315c75-64f1-4b04-bc92-c64825a9cb0b'
-    const uuidAmiE = '56ecde20-b0d3-42e9-9a65-5ea4d6adebb8'
-    const uuidNoInvoice = '193155f8-c2af-4bdf-a749-c4dee1254012'
-    const uuidAmrAmiHistData = 'efdd88eb-d301-43fa-8649-e1dcf8039ed0'
+    const uuidAMISToNS = 'e2baf3f8-ee74-4667-9a43-276ea090edfc'
+    const uuidAMINSToS = '31e1d460-aa17-48b7-aab5-7900aed184c2'
+    const uuidTwelveMonths = '00fb4a7d-77b6-4667-b39d-4a420b2638e5'
     var bearerToken
     var userHash
     var baseUrl = Cypress.env('baseURL')
@@ -32,6 +26,11 @@ describe("GB download - Date picker", () => {
             bearerToken = token
             cy.log(bearerToken)
         })
+    })
+
+    beforeEach(() => {
+        cy.log('beforeEach')
+        cy.deleteDownloadsFolder()
     })
 
     it("Navigate to Download my data & Export data - AMR Solar", () => {
@@ -52,6 +51,21 @@ describe("GB download - Date picker", () => {
 
     it("Navigate to Download my data & Export data - AMR to AMI Solar", () => {
         generateUrl(uuidAMRToAMISolar)
+    })
+
+    it("Navigate to Download my data & Export data - AMI Solar to AMI NonSolar", () => {
+        generateUrl(uuidAMISToNS)
+    })
+
+    it("Navigate to Download my data & Export data - AMI NonSolar to AMI Solar", () => {
+        generateUrl(uuidAMINSToS)
+    })
+
+    it("Navigate to Download my data & Export data - 365 Days data", () => {
+        generateUrl(uuidTwelveMonths)
+        cy.contains('Export usage for range of bill period').click()
+        cy.get(objGbDownload.dropdownEle).click()
+        // cy.get(objGbDownload.dropdownList).should('have.length', 12)    
     })
 
     function generateUrl(uuid) {
@@ -85,6 +99,10 @@ describe("GB download - Date picker", () => {
                 cy.get('[role="presentation"]').eq(11).click()
                 objGbDownload.clickExport()
                 objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
+                cy.wait(2000)
+                cy.task('downloads', 'cypress/downloads').then(after => {
+                    expect(after.length).to.be.eq(1)
+                })
             })
     }
 

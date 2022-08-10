@@ -20,6 +20,7 @@ const path = require("path");
 const fsExtra = require("fs-extra");
 const {downloadFile} = require('cypress-downloadfile/lib/addPlugin')
 const fs = require('fs');
+const { rmdir } = require('fs')
 
 function getConfigurationByFile(file) {
   const pathToConfigFile = path.resolve("cypress/config", `${file}.json`);
@@ -43,6 +44,22 @@ module.exports = (on, config) => {
     downloads:  (downloadspath) => {
       return fs.readdirSync(downloadspath)
     }
+  })
+
+  on('task', {
+    deleteFolder(folderName) {
+      console.log('deleting folder %s', folderName)
+
+      return new Promise((resolve, reject) => {
+        rmdir(folderName, { maxRetries: 10, recursive: true }, (err) => {
+          if (err) {
+            console.error(err)
+            return reject(err)
+          }
+          resolve(null)
+        })
+      })
+    },
   })
 
   const file = config.env.configFile || "uat";

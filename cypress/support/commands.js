@@ -79,3 +79,8 @@ Cypress.Commands.add('getAccessToken', () => {
           return respbody.access_token
       })
 })
+
+Cypress.Commands.add('deleteDownloadsFolder', () => {
+    const downloadsFolder = Cypress.config('downloadsFolder')
+    cy.task('deleteFolder', downloadsFolder)
+})
