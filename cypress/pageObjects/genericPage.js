@@ -45,17 +45,15 @@ class genericPage {
     }
 
     //User Hash Api//
-    userHashApiResponse(uuid, pilotId) {
-        return cy.getAccessToken().then((token) => {
-            return cy.request({
-                method: 'GET',
-                url: Cypress.env('baseURL') + '/v2.0/user-auth/cipher?user-id=' + uuid + '&pilot-id=' + pilotId,
-                headers: { 'Authorization': 'Bearer ' + token }, timeout: 30000
-            }).then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
-                return res
-            })
+    userHashApiResponse(uuid, pilotId, token) {
+        return cy.request({
+            method: 'GET',
+            url: Cypress.env('baseURL') + '/v2.0/user-auth/cipher?user-id=' + uuid + '&pilot-id=' + pilotId,
+            headers: { 'Authorization': 'Bearer ' + token }, timeout: 30000
+        }).then((Response) => {
+            expect(Response.status).to.eq(200)
+            let res = Response.body
+            return res
         })
     }
 }

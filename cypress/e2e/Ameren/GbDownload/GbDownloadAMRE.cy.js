@@ -1,11 +1,14 @@
 import GBDownload from "../../../pageObjects/GBDownload"
 import genericPage from "../../../pageObjects/genericPage"
+import ApiResponse from "../../../pageObjects/ApiResponse"
 
 describe("GB download - AMR Electric", () => {
     const objGenericPage = new genericPage()
     const objGbDownload = new GBDownload()
+    const objApiResponse = new ApiResponse()
     const utility = 'ameren'
     const pilotData = Cypress.env(utility)
+    const gatewayId = '3'
     var objLength
     var billingStartTs
     var billingEndTs
@@ -29,31 +32,21 @@ describe("GB download - AMR Electric", () => {
     before(function () {
         cy.getAccessToken().then((token) => {
             bearerToken = token
-            cy.request({
-                method: 'GET',
-                url: baseUrl + '/v2.0/user-auth/cipher?user-id=' + uuid + '&pilot-id=' + pilotData.pilotId,
-                headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
-            })
-                .then((Response) => {
-                    expect(Response.status).to.eq(200)
-                    let res = Response.body
+            cy.getAccessToken().then((token) => {
+                bearerToken = token
+                cy.log(bearerToken)
+                objGenericPage.userHashApiResponse(uuid, pilotData.pilotId, bearerToken).then((res) => {
                     cy.log(res.payload)
-                    userHash = res.payload
                     cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
                 })
+            })
         })
     })
 
     it("Invoice data API response", () => {
         cy.log(bearerToken)
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/billingdata/users/' + uuid + '/homes/1/utilitydata?t0=1&t1=1906986799&measurementType='+strMeasurementType,
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
-        })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
+        objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
+            .then((res) => {
                 cy.log(res)
                 objLength = Object.keys(res).length;
                 cy.log(objLength)
@@ -136,7 +129,7 @@ describe("GB download - AMR Electric", () => {
         cy.wait(200)
         cy.get(objGbDownload.calendarIcon).eq(0).should('be.visible')
         cy.get(objGbDownload.calendarIcon).eq(1).should('be.visible')
-        
+
         cy.get(objGbDownload.calendarIcon).eq(0).click()
         cy.get('[aria-label="Go to the previous month"]').click()
         cy.get('[role="presentation"]').eq(10).click()
@@ -195,14 +188,8 @@ describe("GB download - AMR Electric", () => {
     })
 
     it('Fetch values from RAW data', () => {
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/streams/users/' + uuid + '/homes/1/gws/3/meters/1/gb.json?t0=' + billingStartTs + '&t1=' + newEpochEndTs,
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
-        })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
+        objApiResponse.gbJsonResponse(uuid, gatewayId, billingStartTs, newEpochEndTs, bearerToken)
+            .then((res) => {
                 cy.log(res)
                 var firstKey = Object.keys(res)[0];
                 let objData = res[firstKey]
@@ -225,16 +212,10 @@ describe("GB download - AMR Electric", () => {
     })
 
     it('Fetch values from Meter API', () => {
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/meta/users/' + uuid + '/homes/1/gws/3/meters',
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
-        })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
+        objApiResponse.meterApiResponse(uuid, gatewayId, bearerToken)
+            .then((res) => {
                 cy.log(res)
-                var strMeterObj = '/users/' + uuid + '/homes/1/gws/3/meters/1'
+                var strMeterObj = '/users/' + uuid + '/homes/1/gws/' + gatewayId + '/meters/1'
                 var meterObj = res[strMeterObj]
                 meterToken = meterObj.token
                 cy.log(meterToken)
