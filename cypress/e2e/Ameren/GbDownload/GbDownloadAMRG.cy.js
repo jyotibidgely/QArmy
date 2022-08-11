@@ -35,15 +35,16 @@ describe("GB download - AMR Gas", () => {
             cy.getAccessToken().then((token) => {
                 bearerToken = token
                 cy.log(bearerToken)
-                objGenericPage.userHashApiResponse(uuid, pilotData.pilotId, bearerToken).then((res) => {
+                objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
                     cy.log(res.payload)
-                    cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
+                    userHash = res.payload
                 })
             })
         })
     })
 
     it("Invoice data API response", () => {
+        cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
         cy.log(bearerToken)
         objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
             .then((res) => {
@@ -155,6 +156,7 @@ describe("GB download - AMR Gas", () => {
     })
 
     it("Export data - Days", () => {
+        cy.deleteDownloadsFolder()
         cy.contains('Export usage for range of days').click()
         objGbDownload.enterFromDate('16/09/20')
         objGbDownload.checkErrorMsg('Invalid Date Format')
@@ -243,7 +245,7 @@ describe("GB download - AMR Gas", () => {
         })
     })
 
-    it.skip("Upload data - DMD Validator", () => {
+    it("Upload data - DMD Validator", () => {
         cy.visit("https://dmdvalidator.greenbuttonalliance.org/")
         cy.get('#FBSelection', { timeout: 10000 }).should('be.visible')
         cy.get('select').select('Energy Usage file: Electricity Interval Metering')
@@ -257,7 +259,9 @@ describe("GB download - AMR Gas", () => {
             //upload file with attachFile
             cy.get('#dropZone')
                 .attachFile(fileToUpload, { subjectType: 'drag-n-drop' });
-            cy.get(':nth-child(6) > thead > tr > td', { timeout: 15000 }).should('have.text', ' ...all tests were successful.')
+            // cy.get(':nth-child(6) > thead > tr > td', { timeout: 15000 }).should('have.text', ' ...all tests were successful.')
+            cy.get('thead > tr > td', { timeout: 15000 }).should('have.text', ' ...all tests were successful. ...all tests were successful. ...all tests were successful.')
+            cy.get('.text-danger').should('not.exist')
         })
     })
 })

@@ -1,11 +1,14 @@
 import GBDownload from "../../../pageObjects/GBDownload"
 import genericPage from "../../../pageObjects/genericPage"
+import ApiResponse from "../../../pageObjects/ApiResponse"
 
 describe("GB download - Negative Tests", () => {
     const objGenericPage = new genericPage()
     const objGbDownload = new GBDownload()
+    const objApiResponse = new ApiResponse()
     const utility = 'ameren'
     const pilotData = Cypress.env(utility)
+    const strMeasurementType = 'ELECTRIC'
     let objLength
     var strMinStartDate
     var strMinEndDate
@@ -24,8 +27,6 @@ describe("GB download - Negative Tests", () => {
     const uuidNoInvoice = '193155f8-c2af-4bdf-a749-c4dee1254012'
     const uuidAmrAmiHistData = 'efdd88eb-d301-43fa-8649-e1dcf8039ed0'
     var bearerToken
-    var userHash
-    var baseUrl = Cypress.env('baseURL')
 
     before(function () {
         cy.getAccessToken().then((token) => {
@@ -97,30 +98,16 @@ describe("GB download - Negative Tests", () => {
 
     function generateUrl(uuid) {
         cy.log('UUID - ' + uuid)
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/v2.0/user-auth/cipher?user-id=' + uuid + '&pilot-id=' + pilotData.pilotId,
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
+        objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
+            cy.log(res.payload)
+            cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
+            invoiceResponse(uuid)
         })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
-                cy.log(res.payload)
-                userHash = res.payload
-                cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
-                invoiceResponse(uuid)
-            })
     }
 
     function invoiceResponse(uuid) {
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/billingdata/users/' + uuid + '/homes/1/utilitydata?t0=1&t1=1906986799&measurementType=ELECTRIC',
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
-        })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
+        objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
+            .then((res) => {
                 cy.log(res)
 
                 let objFirst = Object.keys(res)[0]

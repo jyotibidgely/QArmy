@@ -21,7 +21,7 @@ class GBDownload {
     }
 
     verifySubtitle() {
-        cy.get(this.subTitle).should('have.text', 'Select the time period:')
+        cy.get(this.subTitle, {timeout:10000}).should('have.text', 'Select the time period:')
     }
 
     verifyExportBillLabel() {

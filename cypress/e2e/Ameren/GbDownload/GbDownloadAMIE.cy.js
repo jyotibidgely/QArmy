@@ -32,14 +32,16 @@ describe("GB download - AMI Electric", () => {
         cy.getAccessToken().then((token) => {
             bearerToken = token
             cy.log(bearerToken)
-            objGenericPage.userHashApiResponse(uuid, pilotData.pilotId, bearerToken).then((res) => {
+            objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
                 cy.log(res.payload)
                 userHash = res.payload
-                cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
             })
         })
     })
+
     it("Invoice data API response", () => {
+        cy.log('Hash - ' + userHash)
+        cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
         cy.log(bearerToken)
         objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
             .then((res) => {
@@ -151,6 +153,7 @@ describe("GB download - AMI Electric", () => {
     })
 
     it("Export data - Days", () => {
+        cy.deleteDownloadsFolder()
         cy.log('Start date - ' + strStartDate)
 
         cy.contains('Export usage for range of days').click()
@@ -237,7 +240,7 @@ describe("GB download - AMI Electric", () => {
         })
     })
 
-    it.skip("Upload data - DMD Validator", () => {
+    it("Upload data - DMD Validator", () => {
         cy.visit("https://dmdvalidator.greenbuttonalliance.org/")
         cy.get('#FBSelection', { timeout: 10000 }).should('be.visible')
         cy.get('select').select('Energy Usage file: Electricity Interval Metering')
@@ -251,7 +254,8 @@ describe("GB download - AMI Electric", () => {
             //upload file with attachFile
             cy.get('#dropZone')
                 .attachFile(fileToUpload, { subjectType: 'drag-n-drop' });
-            cy.get(':nth-child(6) > thead > tr > td', { timeout: 15000 }).should('have.text', ' ...all tests were successful.')
+            cy.get('thead > tr > td', { timeout: 15000 }).should('have.text', ' ...all tests were successful. ...all tests were successful. ...all tests were successful.')
+            cy.get('.text-danger').should('not.exist')
         })
     })
 })

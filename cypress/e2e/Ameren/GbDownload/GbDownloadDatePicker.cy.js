@@ -6,9 +6,6 @@ describe("GB download - Date picker", () => {
     const objGbDownload = new GBDownload()
     const utility = 'ameren'
     const pilotData = Cypress.env(utility)
-    let objLength
-    var strMinStartDate
-    var strMinEndDate
     const uuidAMRSolar = 'f9d041f9-ff10-42c7-a10a-82b066b249a0'
     const uuidAMISolar = '2ed5382d-59a2-4571-8654-ae04f2c4cd69'
     const uuidAMREToAMRS = 'ed720f86-8c63-4686-9736-5c1b784b6ca8'
@@ -18,8 +15,6 @@ describe("GB download - Date picker", () => {
     const uuidAMINSToS = '31e1d460-aa17-48b7-aab5-7900aed184c2'
     const uuidTwelveMonths = '00fb4a7d-77b6-4667-b39d-4a420b2638e5'
     var bearerToken
-    var userHash
-    var baseUrl = Cypress.env('baseURL')
 
     before(function () {
         cy.getAccessToken().then((token) => {
@@ -70,40 +65,31 @@ describe("GB download - Date picker", () => {
 
     function generateUrl(uuid) {
         cy.log('UUID - ' + uuid)
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/v2.0/user-auth/cipher?user-id=' + uuid + '&pilot-id=' + pilotData.pilotId,
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
-        })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
-                cy.log(res.payload)
-                userHash = res.payload
-                cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
-                // invoiceResponse(uuid)
-                objGenericPage.checkHeader()
-                cy.wait(1000)
-                objGenericPage.clickDownloadMyData()
-                cy.wait(500)
-                objGenericPage.loadingScreenIndicator()
-                cy.wait(1000)
-                cy.contains('Export usage for range of days').click()
-                cy.wait(1000)
-                cy.get(objGbDownload.calendarIcon).eq(0).click()
-                cy.get('[aria-label="Go to the previous month"]').click()
-                cy.get('[role="presentation"]').eq(10).click()
+        objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
+            cy.log(res.payload)
+            cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
+            objGenericPage.checkHeader()
+            cy.wait(1000)
+            objGenericPage.clickDownloadMyData()
+            cy.wait(500)
+            objGenericPage.loadingScreenIndicator()
+            cy.wait(1000)
+            cy.contains('Export usage for range of days').click()
+            cy.wait(1000)
+            cy.get(objGbDownload.calendarIcon).eq(0).click()
+            cy.get('[aria-label="Go to the previous month"]').click()
+            cy.get('[role="presentation"]').eq(10).click()
 
-                cy.get(objGbDownload.calendarIcon).eq(1).click()
-                cy.get('[aria-label="Go to the previous month"]').click()
-                cy.get('[role="presentation"]').eq(11).click()
-                objGbDownload.clickExport()
-                objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
-                cy.wait(2000)
-                cy.task('downloads', 'cypress/downloads').then(after => {
-                    expect(after.length).to.be.eq(1)
-                })
+            cy.get(objGbDownload.calendarIcon).eq(1).click()
+            cy.get('[aria-label="Go to the previous month"]').click()
+            cy.get('[role="presentation"]').eq(11).click()
+            objGbDownload.clickExport()
+            objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
+            cy.wait(2000)
+            cy.task('downloads', 'cypress/downloads').then(after => {
+                expect(after.length).to.be.eq(1)
             })
+        })
     }
 
 })

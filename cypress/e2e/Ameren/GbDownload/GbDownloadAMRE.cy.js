@@ -35,15 +35,16 @@ describe("GB download - AMR Electric", () => {
             cy.getAccessToken().then((token) => {
                 bearerToken = token
                 cy.log(bearerToken)
-                objGenericPage.userHashApiResponse(uuid, pilotData.pilotId, bearerToken).then((res) => {
+                objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
                     cy.log(res.payload)
-                    cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
+                    userHash = res.payload
                 })
             })
         })
     })
 
     it("Invoice data API response", () => {
+        cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
         cy.log(bearerToken)
         objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
             .then((res) => {
@@ -155,6 +156,7 @@ describe("GB download - AMR Electric", () => {
     })
 
     it("Export data - Days", () => {
+        cy.deleteDownloadsFolder()
         cy.contains('Export usage for range of days').click()
         objGbDownload.enterFromDate('16/09/20')
         objGbDownload.checkErrorMsg('Invalid Date Format')
@@ -235,12 +237,10 @@ describe("GB download - AMR Electric", () => {
                     cy.wrap(fileToRead).should('contain', element)
                 }
             })
-            //     // cy.readFile("cypress/downloads/"+after).should('contain', '<espi:IntervalBlock><espi:interval><espi:duration>86400</espi:duration><espi:start>1654750800</espi:start></espi:interval><espi:IntervalReading><espi:ReadingQuality><espi:quality>17</espi:quality></espi:ReadingQuality><espi:timePeriod><espi:duration>86400</espi:duration><espi:start>1654750800</espi:start></espi:timePeriod><espi:value>111300</espi:value></espi:IntervalReading></espi:IntervalBlock></content><published>2022-07-26T13:24:52.275Z</published><updated>2022-07-26T13:24:52.275Z</updated></entry><entry><id>urn:uuid:012bc7b5-2bde-3a8e-9874-31f27f3bf0e0</id><link href="http://amerenuatapi.bidgely.com/Customer/39977728884556036/UsagePoint/9056348086580949057/MeterReading/5429490602267981274/IntervalBlock/5534999940292988461" rel="self" type="espi-entry/IntervalBlock"/><link href="http://amerenuatapi.bidgely.com/Customer/39977728884556036/UsagePoint/9056348086580949057/MeterReading/5429490602267981274/IntervalBlock" rel="up" type="espi-feed/IntervalBlock"/><title>IntervalBlock ID: 3582119876618863370; Start: 2022-06-10T05:00-05:00[CST6CDT]</title><content><espi:IntervalBlock><espi:interval><espi:duration>86400</espi:duration><espi:start>1654837200</espi:start></espi:interval><espi:IntervalReading><espi:ReadingQuality><espi:quality>17</espi:quality></espi:ReadingQuality><espi:timePeriod><espi:duration>86400</espi:duration><espi:start>1654837200</espi:start></espi:timePeriod><espi:value>111300</espi:value></espi:IntervalReading></espi:IntervalBlock>')
-            //     //   expect(after.length).to.be.eq(before.length +1)  
         })
     })
 
-    it.skip("Upload data - DMD Validator", () => {
+    it("Upload data - DMD Validator", () => {
         cy.visit("https://dmdvalidator.greenbuttonalliance.org/")
         cy.get('#FBSelection', { timeout: 10000 }).should('be.visible')
         cy.get('select').select('Energy Usage file: Electricity Interval Metering')
@@ -254,7 +254,8 @@ describe("GB download - AMR Electric", () => {
             //upload file with attachFile
             cy.get('#dropZone')
                 .attachFile(fileToUpload, { subjectType: 'drag-n-drop' });
-            cy.get(':nth-child(6) > thead > tr > td', { timeout: 15000 }).should('have.text', ' ...all tests were successful.')
+            cy.get('thead > tr > td', { timeout: 15000 }).should('have.text', ' ...all tests were successful. ...all tests were successful. ...all tests were successful.')
+            cy.get('.text-danger').should('not.exist')
         })
     })
 })

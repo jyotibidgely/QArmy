@@ -1,9 +1,11 @@
 import GBDownload from "../../../pageObjects/GBDownload"
 import genericPage from "../../../pageObjects/genericPage"
+import ApiResponse from "../../../pageObjects/ApiResponse"
 
 describe("GB download - Multimeter Tests", () => {
     const objGenericPage = new genericPage()
     const objGbDownload = new GBDownload()
+    const objApiResponse = new ApiResponse()
     const utility = 'ameren'
     const pilotData = Cypress.env(utility)
     let objLength
@@ -15,13 +17,9 @@ describe("GB download - Multimeter Tests", () => {
     const uuidMultimeterAMRG = '1d104bbe-b157-44e5-9b2d-3189434d41ef'
     const uuidMultimeterAMRS = 'c195dfb9-4412-419d-ad7e-8098060d831b'
     const uuidMultimeterAMIS = '37020e8b-1ded-4030-999c-50a17054ade4'
-
     const uuidRaw10Days = '55c050bf-890b-4b9f-98eb-5d85b36ec8cf'
     const uuidRaw10Days1BC = 'a38887a8-43fd-4911-af0e-3bb756d36f95'
-
     var bearerToken
-    var userHash
-    var baseUrl = Cypress.env('baseURL')
 
     before(function () {
         cy.getAccessToken().then((token) => {
@@ -66,30 +64,16 @@ describe("GB download - Multimeter Tests", () => {
 
     function generateUrl(uuid) {
         cy.log('UUID - ' + uuid)
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/v2.0/user-auth/cipher?user-id=' + uuid + '&pilot-id=' + pilotData.pilotId,
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
+        objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
+            cy.log(res.payload)
+            cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
+            invoiceResponse(uuid)
         })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
-                cy.log(res.payload)
-                userHash = res.payload
-                cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
-                invoiceResponse(uuid)
-            })
     }
 
     function invoiceResponse(uuid) {
-        cy.request({
-            method: 'GET',
-            url: baseUrl + '/billingdata/users/' + uuid + '/homes/1/utilitydata?t0=1&t1=1906986799&measurementType=' + measurementType,
-            headers: { 'Authorization': 'Bearer ' + bearerToken }, timeout: 30000
-        })
-            .then((Response) => {
-                expect(Response.status).to.eq(200)
-                let res = Response.body
+        objApiResponse.invoiceDataResponse(uuid, measurementType, bearerToken)
+            .then((res) => {
                 cy.log(res)
 
                 let objFirst = Object.keys(res)[0]
