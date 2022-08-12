@@ -1,0 +1,202 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2022-08-12T11:34:51.108Z",
+    "end": "2022-08-12T11:37:05.226Z",
+    "duration": 134118,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "fe9b258f-405a-455d-b2e5-f694d907c359",
+      "title": "",
+      "fullFile": "cypress/e2e/Ameren/GbDownload/GbDownloadDualFuel.cy.js",
+      "file": "cypress/e2e/Ameren/GbDownload/GbDownloadDualFuel.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "6a94f261-ae0f-45a4-9948-8d8580e4d37b",
+          "title": "GB download - Dual fuel",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Navigate to Download my data & Export data - AMR Electric",
+              "fullTitle": "GB download - Dual fuel Navigate to Download my data & Export data - AMR Electric",
+              "timedOut": null,
+              "duration": 32144,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "downloadData('ELECTRIC', gatewayIdEAmr, 'Electric');",
+              "err": {},
+              "uuid": "bdfd4854-5a78-410c-bd69-2de7a1a0b0cb",
+              "parentUUID": "6a94f261-ae0f-45a4-9948-8d8580e4d37b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Fetch values from Meter API - AMR Electric",
+              "fullTitle": "GB download - Dual fuel Fetch values from Meter API - AMR Electric",
+              "timedOut": null,
+              "duration": 532,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "objApiResponse.meterApiResponse(uuidDualAMREG, gatewayIdEAmr, bearerToken).then(res => {\n  cy.log(res);\n  var strMeterObj = '/users/' + uuidDualAMREG + '/homes/1/gws/' + gatewayIdEAmr + '/meters/1';\n  var meterObj = res[strMeterObj];\n  meterTokenE = meterObj.token;\n  cy.log(meterTokenE);\n});",
+              "err": {},
+              "uuid": "1deb47dd-f83b-445c-829f-d0520c2c13ac",
+              "parentUUID": "6a94f261-ae0f-45a4-9948-8d8580e4d37b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Read download file - AMR Electric",
+              "fullTitle": "GB download - Dual fuel Read download file - AMR Electric",
+              "timedOut": null,
+              "duration": 417,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.task('downloads', 'cypress/downloads').then(after => {\n  console.log(after); // console.log(strObj)\n  cy.readFile(\"cypress/downloads/\" + after).then(fileToRead => {\n    cy.wrap(fileToRead).should('contain', 'Green Button Data File. Meter: ' + meterTokenE);\n    cy.wrap(fileToRead).should('contain', '<espi:ReadingType><espi:accumulationBehaviour>4</espi:accumulationBehaviour><espi:commodity>1</espi:commodity><espi:dataQualifier>12</espi:dataQualifier><espi:defaultQuality>17</espi:defaultQuality><espi:flowDirection>1</espi:flowDirection><espi:intervalLength>86400</espi:intervalLength><espi:kind>12</espi:kind><espi:phase>769</espi:phase><espi:powerOfTenMultiplier>0</espi:powerOfTenMultiplier><espi:timeAttribute>0</espi:timeAttribute><espi:uom>72</espi:uom></espi:ReadingType>');\n    for (let index = 0; index < arrValues.length; index++) {\n      const element = arrValues[index];\n      console.log(element);\n      cy.wrap(fileToRead).should('contain', element);\n    }\n  });\n});",
+              "err": {},
+              "uuid": "ceb47fc1-63e8-4211-aede-40fafe6045e3",
+              "parentUUID": "6a94f261-ae0f-45a4-9948-8d8580e4d37b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Navigate to Download my data & Export data - AMR Gas",
+              "fullTitle": "GB download - Dual fuel Navigate to Download my data & Export data - AMR Gas",
+              "timedOut": null,
+              "duration": 37105,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "downloadData('GAS', gatewayIdGAmr, 'Gas');",
+              "err": {},
+              "uuid": "0568d25e-9eb1-4bbd-8b3e-1f8644ceea6b",
+              "parentUUID": "6a94f261-ae0f-45a4-9948-8d8580e4d37b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Fetch values from Meter API - AMR Gas",
+              "fullTitle": "GB download - Dual fuel Fetch values from Meter API - AMR Gas",
+              "timedOut": null,
+              "duration": 475,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "objApiResponse.meterApiResponse(uuidDualAMREG, gatewayIdGAmr, bearerToken).then(res => {\n  cy.log(res);\n  var strMeterObj = '/users/' + uuidDualAMREG + '/homes/1/gws/' + gatewayIdGAmr + '/meters/1';\n  var meterObj = res[strMeterObj];\n  meterTokenG = meterObj.token;\n  cy.log(meterTokenG);\n});",
+              "err": {},
+              "uuid": "8fe6e891-2e6c-4e1d-89a2-f0cb729e763f",
+              "parentUUID": "6a94f261-ae0f-45a4-9948-8d8580e4d37b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Navigate to Download my data & Export data - No Invoice data",
+              "fullTitle": "GB download - Dual fuel Navigate to Download my data & Export data - No Invoice data",
+              "timedOut": null,
+              "duration": 52527,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "generateUrl(uuidNoInvoice, 'Electric');\ngenerateUrl(uuidNoInvoice, 'Gas');",
+              "err": {},
+              "uuid": "f4c0607c-eb58-4502-bfa5-6c959320c5d7",
+              "parentUUID": "6a94f261-ae0f-45a4-9948-8d8580e4d37b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "bdfd4854-5a78-410c-bd69-2de7a1a0b0cb",
+            "1deb47dd-f83b-445c-829f-d0520c2c13ac",
+            "ceb47fc1-63e8-4211-aede-40fafe6045e3",
+            "0568d25e-9eb1-4bbd-8b3e-1f8644ceea6b",
+            "8fe6e891-2e6c-4e1d-89a2-f0cb729e763f",
+            "f4c0607c-eb58-4502-bfa5-6c959320c5d7"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 123200,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/reports/mocha",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

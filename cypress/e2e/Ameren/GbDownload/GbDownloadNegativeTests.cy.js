@@ -88,10 +88,6 @@ describe("GB download - Negative Tests", () => {
         generateUrl(uuidAmiE)
     })
 
-    it("Navigate to Download my data & Export data - No Invoice data", () => {
-        generateUrl(uuidNoInvoice)
-    })
-
     it("Navigate to Download my data & Export data - AMR-AMI Historical data", () => {
         generateUrl(uuidAmrAmiHistData)
     })

@@ -1,0 +1,202 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2022-08-12T11:29:28.965Z",
+    "end": "2022-08-12T11:30:36.142Z",
+    "duration": 67177,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "14c9657b-8585-4471-88e7-a105b733e316",
+      "title": "",
+      "fullFile": "cypress/e2e/Ameren/GbDownload/GbDownloadAmrToAmi.cy.js",
+      "file": "cypress/e2e/Ameren/GbDownload/GbDownloadAmrToAmi.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "b93de383-2bff-484d-88a5-5043036fd2d2",
+          "title": "GB download - AMR To AMI Electric",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Navigate to Download my data & Export data - 1 BC missing",
+              "fullTitle": "GB download - AMR To AMI Electric Navigate to Download my data & Export data - 1 BC missing",
+              "timedOut": null,
+              "duration": 39962,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.deleteDownloadsFolder();\ncy.log('UUID - ' + uuidAmrToAmi);\nobjGenericPage.userHashApiResponse(uuidAmrToAmi, pilotData.pilotId).then(res => {\n  cy.log(res.payload);\n  cy.visit(pilotData.url + \"dashboard?user-hash=\" + res.payload);\n  objGenericPage.checkHeader();\n  cy.wait(1000);\n  objGenericPage.clickDownloadMyData();\n  cy.wait(1000);\n  objApiResponse.invoiceDataResponse(uuidAmrToAmi, strMeasurementType, bearerToken).then(res => {\n    objLength = Object.keys(res).length;\n    cy.log(objLength);\n    var isAmrUser = false;\n    var isAmiUser = false;\n    var checkOnceAmr = true;\n    var checkOnceAmi = true;\n    for (let index = 0; index < objLength; index++) {\n      const element = Object.keys(res)[index];\n      let firstObjData = res[element];\n      if (firstObjData['userType'] == 'AMR' && checkOnceAmr) {\n        cy.log('AMR meter');\n        isAmrUser = true;\n        checkOnceAmr = false;\n        let firstBillingStartTs = firstObjData['billingStartTs'];\n        let firstBillingEndTs = firstObjData['billingEndTs'];\n        let firstStartTs = new Date(firstBillingStartTs * 1000);\n        let firstEndTs = new Date(firstBillingEndTs * 1000);\n        firstEndTs.setDate(firstEndTs.getDate() - 1);\n        strMinStartDate = objGenericPage.changDateFormat(firstStartTs.toDateString());\n        strMinEndDate = objGenericPage.changDateFormat(firstEndTs.toDateString());\n        var billPeriodStartDateTwo = objGenericPage.changDateFormatString(strMinStartDate);\n        var billPeriodEndDateTwo = objGenericPage.changDateFormatString(strMinEndDate);\n        let strBillPeriodDate = billPeriodStartDateTwo + ' - ' + billPeriodEndDateTwo;\n        cy.log(strBillPeriodDate);\n        objGbDownload.verifyPageTitle();\n        objGbDownload.verifySubtitle();\n        objGbDownload.verifyExportBillLabel();\n        objGbDownload.verifyExportDaysLabel();\n        objGbDownload.selectDropdownElement(strBillPeriodDate, objLength);\n        objGbDownload.clickExport();\n        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.');\n        cy.wait(1000);\n        cy.contains('Export usage for range of days').click();\n        objGbDownload.enterFromDate(strMinStartDate);\n        objGbDownload.enterToDate(strMinEndDate);\n        objGbDownload.clickExport();\n        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.');\n      } else if (firstObjData['userType'] == 'GB' && checkOnceAmi) {\n        cy.log('AMI meter');\n        isAmiUser = true;\n        checkOnceAmi = false;\n        cy.reload();\n        let firstBillingStartTsAmi = firstObjData['billingStartTs'];\n        let firstBillingEndTsAmi = firstObjData['billingEndTs'];\n        let firstStartTsAmi = new Date(firstBillingStartTsAmi * 1000);\n        let firstEndTsAmi = new Date(firstBillingEndTsAmi * 1000);\n        firstEndTsAmi.setDate(firstEndTsAmi.getDate() - 1);\n        var strMinStartDateAmi = objGenericPage.changDateFormat(firstStartTsAmi.toDateString());\n        var strMinEndDateAmi = objGenericPage.changDateFormat(firstEndTsAmi.toDateString());\n        var billPeriodStartDateTwoAmi = objGenericPage.changDateFormatString(strMinStartDateAmi);\n        var billPeriodEndDateTwoAmi = objGenericPage.changDateFormatString(strMinEndDateAmi);\n        let strBillPeriodDateAmi = billPeriodStartDateTwoAmi + ' - ' + billPeriodEndDateTwoAmi;\n        cy.log(strBillPeriodDateAmi);\n        objGbDownload.verifySubtitle();\n        cy.wait(500);\n        objGbDownload.selectDropdownElement(strBillPeriodDateAmi, objLength);\n        objGbDownload.clickExport();\n        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.');\n        cy.wait(1000);\n        cy.contains('Export usage for range of days').click();\n        objGbDownload.enterFromDate(strMinStartDateAmi);\n        objGbDownload.enterToDate(strMinEndDateAmi);\n        objGbDownload.clickExport();\n        objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.');\n      }\n    }\n    assert.isTrue(isAmrUser, 'AMR user not found');\n    assert.isTrue(isAmiUser, 'AMI user not found');\n  });\n});",
+              "err": {},
+              "uuid": "68abfdd3-a1e5-487a-96da-65c23a511573",
+              "parentUUID": "b93de383-2bff-484d-88a5-5043036fd2d2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Read download file",
+              "fullTitle": "GB download - AMR To AMI Electric Read download file",
+              "timedOut": null,
+              "duration": 531,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.task('downloads', 'cypress/downloads').then(after => {\n  console.log(after);\n  cy.readFile(\"cypress/downloads/\" + after).then(fileToRead => {\n    cy.wrap(fileToRead).should('contain', '_AMR:inactive');\n  });\n});",
+              "err": {},
+              "uuid": "cf7c37d5-c589-448a-b7a9-edaf419547f6",
+              "parentUUID": "b93de383-2bff-484d-88a5-5043036fd2d2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Navigate to Download my data & Export data - Validate Transition month data",
+              "fullTitle": "GB download - AMR To AMI Electric Navigate to Download my data & Export data - Validate Transition month data",
+              "timedOut": null,
+              "duration": 15852,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.deleteDownloadsFolder();\ncy.log('UUID - ' + uuidTwo);\nobjGenericPage.userHashApiResponse(uuidTwo, pilotData.pilotId).then(res => {\n  cy.log(res.payload);\n  cy.visit(pilotData.url + \"dashboard?user-hash=\" + res.payload);\n  objGenericPage.checkHeader();\n  cy.wait(1000);\n  objGenericPage.clickDownloadMyData();\n  cy.wait(1000);\n  objApiResponse.invoiceDataResponse(uuidTwo, strMeasurementType, bearerToken).then(res => {\n    objLength = Object.keys(res).length;\n    cy.log(objLength);\n    var i = 0;\n    for (let index = 0; index < objLength; index++) {\n      const element = Object.keys(res)[index];\n      let firstObjData = res[element];\n      if (firstObjData['userType'] == 'AMR') {\n        i = i + 1;\n        cy.log('AMR meter' + i);\n      }\n    }\n    cy.log('outside for loop');\n    var firstKey = Object.keys(res)[i];\n    let firstObjData = res[firstKey];\n    cy.log(firstObjData);\n    transitionBillingStartTs = firstObjData['billingStartTs'];\n    transitionBillingEndTs = firstObjData['billingEndTs'];\n    let firstStartTs = new Date(transitionBillingStartTs * 1000);\n    let firstEndTs = new Date(transitionBillingEndTs * 1000);\n    firstEndTs.setDate(firstEndTs.getDate() - 1);\n    strMinStartDate = objGenericPage.changDateFormat(firstStartTs.toDateString());\n    strMinEndDate = objGenericPage.changDateFormat(firstEndTs.toDateString());\n    var billPeriodStartDateTwo = objGenericPage.changDateFormatString(strMinStartDate);\n    var billPeriodEndDateTwo = objGenericPage.changDateFormatString(strMinEndDate);\n    let strBillPeriodDate = billPeriodStartDateTwo + ' - ' + billPeriodEndDateTwo;\n    cy.log(strBillPeriodDate);\n    objGbDownload.verifyPageTitle();\n    objGbDownload.selectDropdownElement(strBillPeriodDate, objLength);\n    objGbDownload.clickExport();\n    objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.');\n    cy.wait(1000);\n  });\n});",
+              "err": {},
+              "uuid": "69b247bf-149e-4f80-a0b3-9245538972a3",
+              "parentUUID": "b93de383-2bff-484d-88a5-5043036fd2d2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Fetch values from RAW data - AMI data",
+              "fullTitle": "GB download - AMR To AMI Electric Fetch values from RAW data - AMI data",
+              "timedOut": null,
+              "duration": 1087,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "objApiResponse.gbJsonResponse(uuidTwo, gatewayIdAmi, transitionBillingStartTs, transitionBillingEndTs, bearerToken).then(res => {\n  cy.log(res);\n  for (let index = 0; index < 5; index++) {\n    const element = res[index];\n    console.log(element);\n    const time = element['time'];\n    var value = element['value'];\n    const duration = element['duration'];\n    value = Math.round(value);\n    cy.log(value);\n    strObj = strObj + '<espi:IntervalReading><espi:ReadingQuality><espi:quality>17</espi:quality></espi:ReadingQuality><espi:timePeriod><espi:duration>' + duration + '</espi:duration><espi:start>' + time + '</espi:start></espi:timePeriod><espi:value>' + value + '</espi:value></espi:IntervalReading>';\n  }\n});",
+              "err": {},
+              "uuid": "5fd2a065-e2e4-423e-855f-e2de5f9c1b1b",
+              "parentUUID": "b93de383-2bff-484d-88a5-5043036fd2d2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Fetch values from RAW data - AMR data",
+              "fullTitle": "GB download - AMR To AMI Electric Fetch values from RAW data - AMR data",
+              "timedOut": null,
+              "duration": 412,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "objApiResponse.gbJsonResponse(uuidTwo, gatewayIdAmr, transitionBillingStartTs, transitionBillingEndTs, bearerToken).then(res => {\n  cy.log(res);\n  var firstKey = Object.keys(res)[0];\n  let objData = res[firstKey];\n  cy.log(objData);\n  for (let index = 0; index < res.length - 1; index++) {\n    const element = res[index];\n    console.log(element);\n    const time = element['time'];\n    var value = element['value'];\n    const duration = element['duration'];\n    value = Math.round(value);\n    cy.log(value);\n    strObjTwo = '<espi:IntervalReading><espi:ReadingQuality><espi:quality>17</espi:quality></espi:ReadingQuality><espi:timePeriod><espi:duration>' + duration + '</espi:duration><espi:start>' + time + '</espi:start></espi:timePeriod><espi:value>' + value + '</espi:value></espi:IntervalReading>';\n    arrValues.push(strObjTwo);\n  }\n});",
+              "err": {},
+              "uuid": "505b26fb-7a0d-4435-8662-739a33c9c798",
+              "parentUUID": "b93de383-2bff-484d-88a5-5043036fd2d2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Read download file - Transition data",
+              "fullTitle": "GB download - AMR To AMI Electric Read download file - Transition data",
+              "timedOut": null,
+              "duration": 286,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.task('downloads', 'cypress/downloads').then(after => {\n  console.log(strObj);\n  cy.readFile(\"cypress/downloads/\" + after).then(fileToRead => {\n    cy.wrap(fileToRead).should('contain', strObj);\n    for (let index = 0; index < arrValues.length; index++) {\n      const element = arrValues[index];\n      console.log(element);\n      cy.wrap(fileToRead).should('contain', element);\n    }\n  });\n});",
+              "err": {},
+              "uuid": "05102d83-1c53-4795-81e8-a8751d4853f0",
+              "parentUUID": "b93de383-2bff-484d-88a5-5043036fd2d2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "68abfdd3-a1e5-487a-96da-65c23a511573",
+            "cf7c37d5-c589-448a-b7a9-edaf419547f6",
+            "69b247bf-149e-4f80-a0b3-9245538972a3",
+            "5fd2a065-e2e4-423e-855f-e2de5f9c1b1b",
+            "505b26fb-7a0d-4435-8662-739a33c9c798",
+            "05102d83-1c53-4795-81e8-a8751d4853f0"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 58130,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/reports/mocha",
+        "quite": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

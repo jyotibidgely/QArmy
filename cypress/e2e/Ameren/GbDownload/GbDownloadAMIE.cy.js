@@ -73,12 +73,12 @@ describe("GB download - AMI Electric", () => {
                 cy.wrap(strStartDate).as('strStartDate');
 
                 var newStartTs = new Date(billingEndTs * 1000);
-                newStartTs.setDate(newStartTs.getDate() - 10)
+                newStartTs.setDate(newStartTs.getDate() - 30)
                 strNewStartDate = objGenericPage.changDateFormat(newStartTs.toDateString())
                 newEpochStartTs = newStartTs.getTime() / 1000
 
                 var newEndTs = new Date(billingEndTs * 1000);
-                newEndTs.setDate(newEndTs.getDate() - 9)
+                newEndTs.setDate(newEndTs.getDate() - 29)
                 strNewEndDate = objGenericPage.changDateFormat(newEndTs.toDateString())
                 newEpochEndTs = newEndTs.getTime() / 1000
             })

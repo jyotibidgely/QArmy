@@ -248,7 +248,7 @@ describe("GB download - AMR Gas", () => {
     it("Upload data - DMD Validator", () => {
         cy.visit("https://dmdvalidator.greenbuttonalliance.org/")
         cy.get('#FBSelection', { timeout: 10000 }).should('be.visible')
-        cy.get('select').select('Energy Usage file: Electricity Interval Metering')
+        cy.get('select').select('Energy Usage file: Natural Gas Interval Metering')
         cy.wait(200)
         cy.get('#FB_15').uncheck({ force: true })
         cy.wait(500)

@@ -5,6 +5,8 @@ class genericPage {
     hamburgerMenuItem = 'a'
     fuelTypeContainer = '.fuel-type-selection-container'
     loadingIndicator = '.loading-screen > img'
+    fuelMenuBtn = '.fuel-menu button'
+    fuelTypeList = 'ul.fuel-type-list li'
 
     checkHeader() {
         cy.get(this.headerContainer, { timeout: 30000 }).should('be.visible')
@@ -42,6 +44,11 @@ class genericPage {
         var dateString = moment(current_datetime).format("MMM D, YYYY");
         console.log(dateString)
         return dateString
+    }
+
+    selectFuelTypeUsingMenuButton(strFuelType) {
+        cy.get(this.fuelMenuBtn).click()
+        cy.get(this.fuelTypeList).contains(strFuelType).click()
     }
 
     //User Hash Api//
