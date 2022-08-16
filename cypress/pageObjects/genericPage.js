@@ -7,6 +7,9 @@ class genericPage {
     loadingIndicator = '.loading-screen > img'
     fuelMenuBtn = '.fuel-menu button'
     fuelTypeList = 'ul.fuel-type-list li'
+    fuelLabel = '.fuel-label'
+    gasFuelIcon = '.icon-left.bidgely-icon-gas'
+    electricFuelIcon = '.icon-left.bidgely-icon-electric'
 
     checkHeader() {
         cy.get(this.headerContainer, { timeout: 30000 }).should('be.visible')
@@ -25,6 +28,10 @@ class genericPage {
 
     selectFuelType(strFuelType) {
         cy.get(this.fuelTypeContainer, { timeout: 20000 }).contains(strFuelType).click()
+    }
+
+    checkFuelLabel(strFuelType) {
+        cy.get(this.fuelLabel, {timeout:30000}).should('have.text', strFuelType)
     }
 
     loadingScreenIndicator() {

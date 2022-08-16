@@ -2,6 +2,8 @@ describe("Accessibility Testing", () => {
 
     before(function () {
         cy.visit("https://ei-uat.bidgely.com/dashboard?user-hash=1637240649329v1GnBStFGiVXiesZCgANGEQL7VXd4Yq14ilF6TuWsETyR6R3xAUCiHR6PYERYyErlyp6WPZPPsOBwhtdwRE1ScbQ==")
+        
+        // cy.visit('http://amerenuat.bidgely.com/dashboard?user-hash=1614160982661v1UQBwNbcsK8Y19BGzMhDxHr7Tx51cpUlfAKpMOKtEc8sxNCF9dp5jlg6T6BAq_YysxlV6POwOKhYiQ6vtcN5chQ==')
         cy.injectAxe();
     });
 
@@ -14,6 +16,10 @@ describe("Accessibility Testing", () => {
 
     it("Check ADA table", () => {
         cy.get('.app-bar-container .bidgely-icon-energy-insight', { timeout: 10000 }).click()
+
+        cy.get('body').tab().tab().tab().tab({ shift: true })
+        // cy.get('[href="/dashboard/home"]').tab({ shift: true })
+
         cy.get('.accessibility-cta', { timeout: 10000 }).should('be.visible')
         cy.get('.accessibility-cta', { timeout: 10000 }).click()
         cy.get('.consumption-chart-table', {timeout:20000}).should('be.visible')

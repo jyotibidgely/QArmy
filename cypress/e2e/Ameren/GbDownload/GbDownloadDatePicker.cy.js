@@ -14,6 +14,7 @@ describe("GB download - Date picker", () => {
     const uuidAMISToNS = 'e2baf3f8-ee74-4667-9a43-276ea090edfc'
     const uuidAMINSToS = '31e1d460-aa17-48b7-aab5-7900aed184c2'
     const uuidTwelveMonths = '00fb4a7d-77b6-4667-b39d-4a420b2638e5'
+    const uuidNoData = '00fb4a7d-77b6-4667-b39d-4a420b2638e5'
     var bearerToken
 
     before(function () {
@@ -61,6 +62,33 @@ describe("GB download - Date picker", () => {
         cy.contains('Export usage for range of bill period').click()
         cy.get(objGbDownload.dropdownEle).click()
         // cy.get(objGbDownload.dropdownList).should('have.length', 12)    
+    })
+
+    it("Navigate to Download my data & Export data - Data Not Present", () => {
+        objGenericPage.userHashApiResponse(uuidNoData, pilotData.pilotId).then((res) => {
+            cy.log(res.payload)
+            cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
+            objGenericPage.checkHeader()
+            cy.wait(1000)
+            objGenericPage.clickDownloadMyData()
+            cy.wait(500)
+            objGenericPage.loadingScreenIndicator()
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow = objGenericPage.changDateFormat(tomorrow)
+            cy.wait(1000)
+            cy.contains('Export usage for range of days').click()
+            objGbDownload.enterFromDate(tomorrow)
+            objGbDownload.enterToDate(tomorrow)
+            objGbDownload.clickExport()
+            objGbDownload.checkSuccessMsg('GreenButton data downloaded successfully.')
+            cy.wait(1500)
+            cy.task('downloads', 'cypress/downloads').then(after => {
+                cy.readFile("cypress/downloads/" + after).then(fileToRead => {
+                    cy.wrap(fileToRead).should('not.contain', '<espi:IntervalReading><espi:ReadingQuality><espi:quality>17</espi:quality></espi:ReadingQuality><espi:timePeriod><espi:duration></espi:duration>')
+                })
+            })
+        })
     })
 
     function generateUrl(uuid) {
