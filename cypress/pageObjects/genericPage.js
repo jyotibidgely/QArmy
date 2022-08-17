@@ -1,5 +1,11 @@
 class genericPage {
     headerContainer = '.app-bar-container'
+    navBarTab = '[data-menu-id="%s"]'
+    homeTab = '[data-menu-id="HOME"]'
+    energyInsightsTab = '[data-menu-id="ENERGY_INSIGHTS"]'
+    myRecommedationsTab = '[data-menu-id="MY_RECOMMENDATIONS"]'
+    surveyTab = '[data-menu-id="SURVEY"]'
+    faqsTab = '[data-menu-id="FAQS"]'
     hamburgerMenuBtn = '.hamburger-menu button'
     navMenuList = '.nav-menu-list'
     hamburgerMenuItem = 'a'
@@ -13,6 +19,12 @@ class genericPage {
 
     checkHeader() {
         cy.get(this.headerContainer, { timeout: 30000 }).should('be.visible')
+    }
+
+    clickNavBarTabs(strTab) {
+        var ele = this.navBarTab.replace(/%s/, strTab)
+        cy.log(ele)
+        cy.get(this.headerContainer, {timeout:10000}).find(ele).click()
     }
 
     clickMenuBtn() {

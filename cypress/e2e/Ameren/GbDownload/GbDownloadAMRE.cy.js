@@ -32,13 +32,10 @@ describe("GB download - AMR Electric", () => {
     before(function () {
         cy.getAccessToken().then((token) => {
             bearerToken = token
-            cy.getAccessToken().then((token) => {
-                bearerToken = token
-                cy.log(bearerToken)
-                objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
-                    cy.log(res.payload)
-                    userHash = res.payload
-                })
+            cy.log(bearerToken)
+            objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
+                cy.log(res.payload)
+                userHash = res.payload
             })
         })
     })
