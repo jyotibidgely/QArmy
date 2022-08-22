@@ -1,4 +1,5 @@
 class genericPage {
+    headerNav = 'header[role="navigation"]'
     headerContainer = '.app-bar-container'
     navBarTab = '[data-menu-id="%s"]'
     homeTab = '[data-menu-id="HOME"]'

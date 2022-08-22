@@ -27,60 +27,131 @@ import 'cypress-file-upload';
 require('cypress-downloadfile/lib/downloadFileCommand')
 
 Cypress.Commands.add("customCheckAlly", () => {
-    const severityIndicatorIcons = {
-      minor: "⚪",
-      moderate: "🌕",
-      serious: "⭕",
-      critical: "⛔",
-    };
-  
-    function callback(violations) {
-      violations.forEach((violation) => {
-        const nodes = Cypress.$(
-          violation.nodes.map((node) => node.target).join(",")
-        );
-  
+  const severityIndicatorIcons = {
+    minor: "⚪",
+    moderate: "🌕",
+    serious: "⭕",
+    critical: "⛔",
+  };
+
+  function callback(violations) {
+    violations.forEach((violation) => {
+      const nodes = Cypress.$(
+        violation.nodes.map((node) => node.target).join(",")
+      );
+
+      Cypress.log({
+        name: `${severityIndicatorIcons[violation.impact]} AllY`,
+        consoleProps: () => violation,
+        $el: nodes,
+        message: `[${violation.help}](${violation.helpUrl})`,
+      });
+
+      violation.nodes.forEach(({ target }) => {
         Cypress.log({
-          name: `${severityIndicatorIcons[violation.impact]} AllY`,
+          name: "ℹ▶",
           consoleProps: () => violation,
-          $el: nodes,
-          message: `[${violation.help}](${violation.helpUrl})`,
-        });
-  
-        violation.nodes.forEach(({ target }) => {
-          Cypress.log({
-            name: "ℹ▶",
-            consoleProps: () => violation,
-            $el: Cypress.$(target.join(",")),
-            message: target,
-          });
+          $el: Cypress.$(target.join(",")),
+          message: target,
         });
       });
-    }
-  
-    cy.checkA11y(null, null, callback);
+    });
+  }
+
+  cy.checkA11y(null, null, callback);
+});
+
+Cypress.Commands.add("customCheckAlly", () => {
+  const severityIndicatorIcons = {
+    minor: "⚪",
+    moderate: "🌕",
+    serious: "⭕",
+    critical: "⛔",
+  };
+
+  function callback(violations) {
+    violations.forEach((violation) => {
+      const nodes = Cypress.$(
+        violation.nodes.map((node) => node.target).join(",")
+      );
+
+      Cypress.log({
+        name: `${severityIndicatorIcons[violation.impact]} AllY`,
+        consoleProps: () => violation,
+        $el: nodes,
+        message: `[${violation.help}](${violation.helpUrl})`,
+      });
+
+      violation.nodes.forEach(({ target }) => {
+        Cypress.log({
+          name: "ℹ▶",
+          consoleProps: () => violation,
+          $el: Cypress.$(target.join(",")),
+          message: target,
+        });
+      });
+    });
+  }
+
+  cy.checkA11y(null, { includedImpacts: ['critical', 'serious'] }, callback);
+});
+
+Cypress.Commands.add("customCheckAllyCritical", (excludeItems) => {
+  cy.log(excludeItems)
+  const severityIndicatorIcons = {
+    minor: "⚪",
+    moderate: "🌕",
+    serious: "⭕",
+    critical: "⛔",
+  };
+
+  function callback(violations) {
+    violations.forEach((violation) => {
+      const nodes = Cypress.$(
+        violation.nodes.map((node) => node.target).join(",")
+      );
+
+      Cypress.log({
+        name: `${severityIndicatorIcons[violation.impact]} AllY`,
+        consoleProps: () => violation,
+        $el: nodes,
+        message: `[${violation.help}](${violation.helpUrl})`,
+      });
+
+      violation.nodes.forEach(({ target }) => {
+        Cypress.log({
+          name: "ℹ▶",
+          consoleProps: () => violation,
+          $el: Cypress.$(target.join(",")),
+          message: target,
+        });
+      });
+    });
+  }
+
+  cy.checkA11y({ exclude: excludeItems }, { includedImpacts: ['critical', 'serious'] }, callback);
 });
 
 Cypress.Commands.add('getAccessToken', () => {
   let tokenUrl = Cypress.env('baseURL') + '/oauth/token?grant_type=client_credentials&scope=all'
-  var oauthString = Cypress.env('clientId')+':'+Cypress.env('clientSecret')
+  var oauthString = Cypress.env('clientId') + ':' + Cypress.env('clientSecret')
   // Encode the String
   var encodedStringBtoA = btoa(oauthString);
   cy.log(encodedStringBtoA)
   return cy.request({
-      method: 'GET',
-      url: tokenUrl,
-      headers: { 'Authorization': 'Basic '+encodedStringBtoA }
+    method: 'GET',
+    url: tokenUrl,
+    headers: { 'Authorization': 'Basic ' + encodedStringBtoA }
   })
-      .then(function (Response) {
-          expect(Response.status).to.eq(200)
-          let respbody = Response.body
-          expect(respbody).to.have.property('access_token')
-          return respbody.access_token
-      })
+    .then(function (Response) {
+      expect(Response.status).to.eq(200)
+      let respbody = Response.body
+      expect(respbody).to.have.property('access_token')
+      return respbody.access_token
+    })
 })
 
 Cypress.Commands.add('deleteDownloadsFolder', () => {
-    const downloadsFolder = Cypress.config('downloadsFolder')
-    cy.task('deleteFolder', downloadsFolder)
+  const downloadsFolder = Cypress.config('downloadsFolder')
+  cy.task('deleteFolder', downloadsFolder)
 })
