@@ -32,7 +32,6 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
 
     it("Check homepage - Electric", () => {
         homepage('Electric')
-
     })
 
     it("Check Energy Insights - Electric", () => {
@@ -74,6 +73,13 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
         survey('Gas')
     })
 
+    it("Check Fuel popup", () => {
+        cy.visit(pilotData.url + "dashboard?user-hash=" + hash)
+        cy.injectAxe()
+        cy.get(objGenericPage.fuelTypeContainer, {timeout:20000})
+        cy.customCheckAlly();
+    })
+
     function homepage(strFuel) {
         objGenericPage.checkHeader()
         objGenericPage.loadingScreenIndicator()
@@ -85,7 +91,9 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
     }
 
     function energyInsights(strFuel) {
-        objGenericPage.clickNavBarTabs('ENERGY_INSIGHTS')
+        cy.get('body').tab().tab().tab().tab().should('have.text', 'Energy Insights')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('ENERGY_INSIGHTS')
         objInsightsPage.insightsPageLoaded()
         objGenericPage.checkFuelLabel(strFuel)
         cy.wait(500)
@@ -95,7 +103,9 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
     }
 
     function recommendations(strFuel) {
-        objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
+        cy.focused().tab().should('contain.text', 'My Recommendations')
+        cy.focused().children().eq(0).type('{enter}')
+        // objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
         objRecoPage.recommedationsPageLoaded()
         objGenericPage.checkFuelLabel(strFuel)
         cy.wait(500)
@@ -105,7 +115,9 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
     }
 
     function faq(strFuel) {
-        objGenericPage.clickNavBarTabs('FAQS')
+        cy.get('body').tab().tab().tab().tab().tab().tab().tab().should('have.text', 'FAQs')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('FAQS')
         objFaq.faqPageLoaded()
         objGenericPage.checkFuelLabel(strFuel)
         cy.wait(500)
@@ -115,12 +127,18 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
     }
 
     function survey(strFuel) {
-        objGenericPage.clickNavBarTabs('SURVEY')
+        cy.focused().tab({ shift: true }).should('have.text', 'Survey')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('SURVEY')
         objSurvey.surveyPageLoaded()
         objGenericPage.checkFuelLabel(strFuel)
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
+        objSurvey.selectSurveyOption(0)
+        objSurvey.clickSurveyButton('Next')
+        cy.wait(1000)
+        cy.get(objSurvey.sliderTitle).should('not.have.text', '0%')
         cy.customCheckAllyExclude([objGenericPage.headerNav]);
     }
 

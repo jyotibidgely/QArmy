@@ -37,7 +37,9 @@ describe("Accessibility Testing - AMI Solar", () => {
     })
 
     it("Check Energy Insights", () => {
-        objGenericPage.clickNavBarTabs('ENERGY_INSIGHTS')
+        cy.get('body').tab().tab().tab().tab().should('have.text', 'Energy Insights')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('ENERGY_INSIGHTS')
         objInsightsPage.insightsPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
@@ -46,7 +48,9 @@ describe("Accessibility Testing - AMI Solar", () => {
     })
 
     it("Check My Recommedations", () => {
-        objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
+        cy.focused().tab().should('have.text', 'My Recommendations')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
         objRecoPage.recommedationsPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
@@ -55,7 +59,9 @@ describe("Accessibility Testing - AMI Solar", () => {
     })
 
     it("Check FAQs", () => {
-        objGenericPage.clickNavBarTabs('FAQS')
+        cy.get('body').tab().tab().tab().tab().tab().tab().tab().should('have.text', 'FAQs')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('FAQS')
         objFaq.faqPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
@@ -64,7 +70,9 @@ describe("Accessibility Testing - AMI Solar", () => {
     })
 
     it("Check Survey", () => {
-        objGenericPage.clickNavBarTabs('SURVEY')
+        cy.focused().tab({ shift: true }).should('have.text', 'Survey')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('SURVEY')
         objSurvey.surveyPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
