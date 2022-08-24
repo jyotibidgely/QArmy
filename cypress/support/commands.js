@@ -96,7 +96,7 @@ Cypress.Commands.add("customCheckAlly", () => {
   cy.checkA11y(null, { includedImpacts: ['critical', 'serious'] }, callback);
 });
 
-Cypress.Commands.add("customCheckAllyCritical", (excludeItems) => {
+Cypress.Commands.add("customCheckAllyExclude", (excludeItems) => {
   cy.log(excludeItems)
   const severityIndicatorIcons = {
     minor: "⚪",

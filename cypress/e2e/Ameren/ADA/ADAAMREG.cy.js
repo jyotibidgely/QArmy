@@ -5,7 +5,7 @@ import HomePage from "../../../pageObjects/HomePage"
 import Recommedations from "../../../pageObjects/Recommedations"
 import Survey from "../../../pageObjects/Survey"
 
-describe("Accessibility Testing", () => {
+describe("Accessibility Testing - AMR Dual fuel", () => {
     const objGenericPage = new genericPage()
     const objHomepage = new HomePage()
     const objInsightsPage = new EnergyInsights()
@@ -91,7 +91,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     }
 
     function recommendations(strFuel) {
@@ -101,7 +101,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     }
 
     function faq(strFuel) {
@@ -111,7 +111,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     }
 
     function survey(strFuel) {
@@ -121,7 +121,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     }
 
 })

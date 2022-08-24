@@ -1,4 +1,4 @@
-describe("Accessibility Testing", () => {
+describe.skip("Accessibility Testing", () => {
 
     before(function () {
         cy.visit("https://ei-uat.bidgely.com/dashboard?user-hash=1637240649329v1GnBStFGiVXiesZCgANGEQL7VXd4Yq14ilF6TuWsETyR6R3xAUCiHR6PYERYyErlyp6WPZPPsOBwhtdwRE1ScbQ==")

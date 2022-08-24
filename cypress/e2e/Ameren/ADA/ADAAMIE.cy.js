@@ -5,7 +5,7 @@ import HomePage from "../../../pageObjects/HomePage"
 import Recommedations from "../../../pageObjects/Recommedations"
 import Survey from "../../../pageObjects/Survey"
 
-describe("Accessibility Testing", () => {
+describe("Accessibility Testing - AMI Electric", () => {
     const objGenericPage = new genericPage()
     const objHomepage = new HomePage()
     const objInsightsPage = new EnergyInsights()
@@ -43,44 +43,44 @@ describe("Accessibility Testing", () => {
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
         let arrEle = [[objGenericPage.headerNav], ['.view-tab.ada-accessibility.MuiTab-root:nth-child(2) > .MuiTab-wrapper']]
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
 
         objInsightsPage.clickInsightMainTabs('Appliance')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightMainTabs('Cost')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightMainTabs('Usage')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
 
         objInsightsPage.clickInsightTabs('Monthly Summary')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightTabs('Similar Homes')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightTabs('Bill Analysis')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightTabs('Rate Plan Options')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check My Recommedations", () => {
@@ -89,7 +89,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check FAQs", () => {
@@ -98,7 +98,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check Survey", () => {
@@ -107,6 +107,6 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAllyCritical([objGenericPage.headerNav]);
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 })

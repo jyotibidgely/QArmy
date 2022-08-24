@@ -5,7 +5,7 @@ import HomePage from "../../../pageObjects/HomePage"
 import Recommedations from "../../../pageObjects/Recommedations"
 import Survey from "../../../pageObjects/Survey"
 
-describe("Accessibility Testing", () => {
+describe("Accessibility Testing - AMR Solar", () => {
     const objGenericPage = new genericPage()
     const objHomepage = new HomePage()
     const objInsightsPage = new EnergyInsights()
@@ -42,17 +42,17 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightSubTabs('Month')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightSubTabs('Filter')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check My Recommedations", () => {
@@ -61,7 +61,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check FAQs", () => {
@@ -70,7 +70,7 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check Survey", () => {
@@ -79,6 +79,6 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 })

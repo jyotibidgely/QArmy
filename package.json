@@ -24,7 +24,7 @@
   "scripts": {
     "cy:open:qa": "cypress open --env configFile=qa",
     "cy:run:qa": "cypress run --env configFile=qa",
-    "cy:run:chrome": "cypress run --spec \"cypress/e2e/Ameren/GbDownload/*\" --headless --browser chrome",
+    "cy:run:chrome": "cypress run --spec \"cypress/e2e/Ameren/ADA/*\" --headless --browser chrome",
     "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
     "pretest": "npm run clean:reports",
     "scripts": "npm run cy:run:chrome",

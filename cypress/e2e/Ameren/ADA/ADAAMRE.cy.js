@@ -5,7 +5,7 @@ import HomePage from "../../../pageObjects/HomePage"
 import Recommedations from "../../../pageObjects/Recommedations"
 import Survey from "../../../pageObjects/Survey"
 
-describe("Accessibility Testing", () => {
+describe("Accessibility Testing - AMR Electric", () => {
     const objGenericPage = new genericPage()
     const objHomepage = new HomePage()
     const objInsightsPage = new EnergyInsights()
@@ -42,34 +42,34 @@ describe("Accessibility Testing", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
 
         objInsightsPage.clickInsightMainTabs('Appliance')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightMainTabs('Cost')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
 
         objInsightsPage.clickInsightTabs('Monthly Summary')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightTabs('Similar Homes')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
         objInsightsPage.clickInsightTabs('Bill Analysis')
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check My Recommedations", () => {
