@@ -31,13 +31,19 @@ describe("Accessibility Testing - AMI Electric", () => {
         objGenericPage.checkHeader()
         objHomepage.homePageLoaded()
         objGenericPage.loadingScreenIndicator()
-        cy.wait(3000)
+        cy.wait(4000)
         // first a11y test
         cy.customCheckAlly();
     })
 
+    it("Check homepage - Ameren Logo", () => {
+        cy.get('body').tab().tab().should('have.attr', 'href')
+    })
+
     it("Check Energy Insights", () => {
-        objGenericPage.clickNavBarTabs('ENERGY_INSIGHTS')
+        cy.get('body').tab().tab().tab().tab().should('have.text', 'Energy Insights')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('ENERGY_INSIGHTS')
         objInsightsPage.insightsPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
@@ -84,7 +90,9 @@ describe("Accessibility Testing - AMI Electric", () => {
     })
 
     it("Check My Recommedations", () => {
-        objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
+        cy.focused().tab().should('have.text', 'My Recommendations')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
         objRecoPage.recommedationsPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
@@ -93,7 +101,9 @@ describe("Accessibility Testing - AMI Electric", () => {
     })
 
     it("Check FAQs", () => {
-        objGenericPage.clickNavBarTabs('FAQS')
+        cy.get('body').tab().tab().tab().tab().tab().tab().tab().should('have.text', 'FAQs')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('FAQS')
         objFaq.faqPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
@@ -102,11 +112,21 @@ describe("Accessibility Testing - AMI Electric", () => {
     })
 
     it("Check Survey", () => {
-        objGenericPage.clickNavBarTabs('SURVEY')
+        cy.focused().tab({ shift: true }).should('have.text', 'Survey')
+        cy.focused().children().type('{enter}')
+        // objGenericPage.clickNavBarTabs('SURVEY')
         objSurvey.surveyPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
         cy.customCheckAllyExclude([objGenericPage.headerNav]);
+    })
+
+    it("Redirect to ameren website", () => {
+        cy.go('back')
+        cy.wait(2000)
+        cy.get('body').tab().tab()
+        cy.focused().invoke('removeAttr', 'target').children().type('{enter}')
+        cy.url().should('equal', 'https://www.ameren.com/')
     })
 })

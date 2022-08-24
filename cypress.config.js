@@ -4,6 +4,7 @@ module.exports = defineConfig({
   viewportWidth: 1400,
   viewportHeight: 800,
   videoUploadOnPasses: false,
+  chromeWebSecurity: false,
   reporter: "cypress-multi-reporters",
   reporterOptions: {
     reporterEnabled: "mochawesome",
