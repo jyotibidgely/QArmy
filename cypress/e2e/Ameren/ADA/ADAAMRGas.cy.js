@@ -48,8 +48,8 @@ describe("Accessibility Testing - AMR Gas", () => {
     })
 
     it("Check My Recommedations", () => {
-        cy.focused().tab().should('have.text', 'My Recommendations')
-        cy.focused().children().type('{enter}')
+        cy.focused().tab().should('contain.text', 'My Recommendations')
+        cy.focused().children().eq(0).type('{enter}')
         // objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
         objRecoPage.recommedationsPageLoaded()
         cy.wait(500)

@@ -24,7 +24,9 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
                 cy.log(res.payload)
                 hash = res.payload
                 cy.visit(pilotData.url + "dashboard?user-hash=" + hash)
-                objGenericPage.selectFuelType('Electric')
+                // objGenericPage.selectFuelType('Electric')
+                cy.get(objGenericPage.fuelTypeContainer, { timeout: 10000 })
+                cy.focused().should('have.text', 'Electric').type('{enter}')
                 cy.injectAxe();
             })
         })
@@ -52,7 +54,9 @@ describe("Accessibility Testing - AMIAMR Dual fuel", () => {
 
     it("Check homepage - Gas", () => {
         cy.visit(pilotData.url + "dashboard?user-hash=" + hash)
-        objGenericPage.selectFuelType('Gas')
+        // objGenericPage.selectFuelType('Gas')
+        cy.get(objGenericPage.fuelTypeContainer, { timeout: 20000 })
+        cy.focused().tab().should('have.text', 'Gas').type('{enter}')
         cy.injectAxe();
         homepage('Gas')
     })

@@ -15,12 +15,14 @@ describe("Accessibility Testing - AMR Electric", () => {
     const uuid = '32b638d1-ceb2-4d3b-9091-981f34c263f9'
     const utility = 'ameren'
     const pilotData = Cypress.env(utility)
+    var hash
 
     before(function () {
         cy.getAccessToken().then((token) => {
             cy.log(token)
             objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
                 cy.log(res.payload)
+                hash = res.payload
                 cy.visit(pilotData.url + "dashboard?user-hash=" + res.payload)
                 cy.injectAxe();
             })
@@ -75,14 +77,14 @@ describe("Accessibility Testing - AMR Electric", () => {
     })
 
     it("Check My Recommedations", () => {
-        cy.focused().tab().should('have.text', 'My Recommendations')
-        cy.focused().children().type('{enter}')
+        cy.focused().tab().should('contain.text', 'My Recommendations')
+        cy.focused().children().eq(0).type('{enter}')
         // objGenericPage.clickNavBarTabs('MY_RECOMMENDATIONS')
         objRecoPage.recommedationsPageLoaded()
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check FAQs", () => {
@@ -93,7 +95,7 @@ describe("Accessibility Testing - AMR Electric", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 
     it("Check Survey", () => {
@@ -104,6 +106,17 @@ describe("Accessibility Testing - AMR Electric", () => {
         cy.wait(500)
         objGenericPage.loadingScreenIndicator()
         cy.wait(2000)
-        cy.customCheckAlly();
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
+    })
+
+    it("Check Download my data", () => {
+        cy.visit(pilotData.url + "dashboard?user-hash=" + hash)
+        cy.injectAxe();
+        objGenericPage.checkHeader()
+        cy.get('body').tab().tab().tab().tab().tab().tab().tab().tab().children().type('{enter}')
+        cy.checkA11y(objGenericPage.navMenuList)
+        cy.focused().should('contain.text', 'Download my data').children().type('{enter}')
+        cy.wait(4000)
+        cy.customCheckAllyExclude([objGenericPage.headerNav]);
     })
 })
