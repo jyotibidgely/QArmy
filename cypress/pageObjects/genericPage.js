@@ -17,6 +17,7 @@ class genericPage {
     fuelLabel = '.fuel-label'
     gasFuelIcon = '.icon-left.bidgely-icon-gas'
     electricFuelIcon = '.icon-left.bidgely-icon-electric'
+    modalCancelIcon = '.bidgely-icon-cancel-circle'
 
     checkHeader() {
         cy.get(this.headerContainer, { timeout: 30000 }).should('be.visible')
@@ -45,6 +46,10 @@ class genericPage {
 
     checkFuelLabel(strFuelType) {
         cy.get(this.fuelLabel, {timeout:30000}).should('have.text', strFuelType)
+    }
+
+    clickCancelIcon() {
+        cy.get(this.modalCancelIcon).click()
     }
 
     loadingScreenIndicator() {

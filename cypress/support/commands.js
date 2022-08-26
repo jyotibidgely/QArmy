@@ -26,7 +26,7 @@
 import 'cypress-file-upload';
 require('cypress-downloadfile/lib/downloadFileCommand')
 
-Cypress.Commands.add("customCheckAlly", () => {
+Cypress.Commands.add("customCheckAllyElement", (ele) => {
   const severityIndicatorIcons = {
     minor: "⚪",
     moderate: "🌕",
@@ -58,7 +58,7 @@ Cypress.Commands.add("customCheckAlly", () => {
     });
   }
 
-  cy.checkA11y(null, null, callback);
+  cy.checkA11y(ele, { includedImpacts: ['critical', 'serious'] }, callback);
 });
 
 Cypress.Commands.add("customCheckAlly", () => {
