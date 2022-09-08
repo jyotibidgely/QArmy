@@ -17,7 +17,7 @@ class GBDownload {
 
 
     verifyPageTitle() {
-        cy.get(this.pageTitle, {timeout:10000}).should('have.text', 'Download my data')
+        cy.get(this.pageTitle, {timeout:10000}).should('have.text', 'Green Button Download')
     }
 
     verifySubtitle() {

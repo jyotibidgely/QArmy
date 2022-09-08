@@ -35,7 +35,7 @@ class genericPage {
 
     clickDownloadMyData() {
         cy.get(this.hamburgerMenuBtn).click()
-        cy.get(this.navMenuList).find(this.hamburgerMenuItem).contains('Download my data').click()
+        cy.get(this.navMenuList).find(this.hamburgerMenuItem).contains('Green Button Download').click()
         // cy.wait(2000)
         // cy.title().should('eq', 'Download my data')
     }
