@@ -26,7 +26,7 @@ class genericPage {
     clickNavBarTabs(strTab) {
         var ele = this.navBarTab.replace(/%s/, strTab)
         cy.log(ele)
-        cy.get(this.headerContainer, {timeout:10000}).find(ele).click()
+        cy.get(this.headerContainer, { timeout: 10000 }).find(ele).click()
     }
 
     clickMenuBtn() {
@@ -35,7 +35,7 @@ class genericPage {
 
     clickDownloadMyData() {
         cy.get(this.hamburgerMenuBtn).click()
-        cy.get(this.navMenuList).find(this.hamburgerMenuItem).contains('Download my data').click()
+        cy.get(this.navMenuList).find(this.hamburgerMenuItem).contains('Green Button Download').click()
         // cy.wait(2000)
         // cy.title().should('eq', 'Download my data')
     }
@@ -45,7 +45,7 @@ class genericPage {
     }
 
     checkFuelLabel(strFuelType) {
-        cy.get(this.fuelLabel, {timeout:30000}).should('have.text', strFuelType)
+        cy.get(this.fuelLabel, { timeout: 30000 }).should('have.text', strFuelType)
     }
 
     clickCancelIcon() {

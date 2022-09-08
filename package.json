@@ -5,8 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "axe-core": "^4.4.2",
+    "aws-sdk": "^2.1205.0",
     "cypress-axe": "^0.14.0",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "replace-in-file": "^6.3.5"
   },
   "devDependencies": {
     "axe-core": "^4.4.2",
@@ -16,16 +18,18 @@
     "cypress-file-upload": "^5.0.8",
     "cypress-multi-reporters": "^1.6.1",
     "cypress-plugin-tab": "^1.0.5",
+    "dotenv": "^16.0.2",
     "mocha": "^10.0.0",
     "mochawesome": "^7.1.3",
     "mochawesome-merge": "^4.2.1",
-    "mochawesome-report-generator": "^6.2.0"
+    "mochawesome-report-generator": "^6.2.0",
+    "replace-in-file": "^6.3.5"
   },
   "scripts": {
     "cy:open:qa": "cypress open --env configFile=qa",
     "cy:run:qa": "cypress run --env configFile=qa",
     "cy:run:chrome": "cypress run --spec \"cypress/e2e/Ameren/ADA/*\" --headless --browser chrome",
-    "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports",
+    "clean:reports": "rm -R -f cypress/reports && mkdir cypress/reports && mkdir cypress/reports/mochareports && rm -R -f cypress/temp",
     "pretest": "npm run clean:reports",
     "scripts": "npm run cy:run:chrome",
     "combine-reports": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochareports/report.json",

@@ -1,6 +1,8 @@
 import GBDownload from "../../../pageObjects/GBDownload"
 import genericPage from "../../../pageObjects/genericPage"
 import ApiResponse from "../../../pageObjects/ApiResponse"
+import DataGenerator from "../../../dataGenerator/ameren/dataGenerator/DataGenerator"
+const dataGenerator = new DataGenerator()
 
 describe("GB download - AMI Electric", () => {
     const objGenericPage = new genericPage()
@@ -19,30 +21,55 @@ describe("GB download - AMI Electric", () => {
     var strNewEndDate
     var newEpochEndTs
     var strMinDate
-    var arrValues = []
     var strObj = ''
     var meterToken
-    const uuid = '00fb4a7d-77b6-4667-b39d-4a420b2638e5'
     var strMeasurementType = 'ELECTRIC'
     var bearerToken
-    var userHash
-    var baseUrl = Cypress.env('baseURL')
+    let userHash
+    let userData;
+    let uuid;
 
     before(function () {
         cy.getAccessToken().then((token) => {
             bearerToken = token
             cy.log(bearerToken)
-            objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
-                cy.log(res.payload)
-                userHash = res.payload
+        })
+        cy.task('deleteFolder', Cypress.env('deleteFolder')).then(() => console.info("deleted successfully"));
+    })
+
+    it("Generate Data", () => {
+        userData = dataGenerator.createData();
+    })
+
+    it("Fetch UUID", () => {
+        objApiResponse.fetchUUIDResponse(userData.contract_Id, userData.premise_Id, pilotData.pilotId, bearerToken)
+            .then((res) => {
+                cy.log(res)
+                uuid = res.split('/')[2]
             })
+    })
+
+    it("userHash generation", () => {
+        cy.wait(10000)
+        objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
+            cy.log(res.payload).debug()
+            userHash = res.payload
+            cy.log('Hash - ' + userHash);
+            cy
         })
     })
 
+    it("Visit ameren dashboard", () => {
+        cy.log('Hash - ' + userHash);
+        cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
+    })
+
     it("Invoice data API response", () => {
-        cy.log('Hash - ' + userHash)
+        cy.log('Hash - ' + userHash);
+        debugger;
         cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
         cy.log(bearerToken)
+        debugger;
         objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
             .then((res) => {
                 cy.log(res)
