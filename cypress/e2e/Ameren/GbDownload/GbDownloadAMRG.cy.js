@@ -1,6 +1,10 @@
 import GBDownload from "../../../pageObjects/GBDownload"
 import genericPage from "../../../pageObjects/genericPage"
 import ApiResponse from "../../../pageObjects/ApiResponse"
+import DataGenerator from "../../../dataGenerator/ameren/dataGenerator/DataGenerator"
+import Utils from "../../../utils/Utils";
+const dataGenerator = new DataGenerator()
+const utils = new Utils();
 
 describe("GB download - AMR Gas", () => {
     const objGenericPage = new genericPage()
@@ -12,37 +16,79 @@ describe("GB download - AMR Gas", () => {
     var objLength
     var billingStartTs
     var billingEndTs
-    var strStartDate
-    var strEndDate
-    var strMinDate
     var strMaxDate
     var strNewStartDate
     var newEpochStartTs
     var strNewEndDate
+    var strStartDate
+    var strEndDate
+    var strMinDate
     var newEpochEndTs
     var arrValues = []
     var strObj = ''
     var meterToken
-    const uuid = 'f11f1157-ca75-4e88-8642-821dd69d81c3'
     var strMeasurementType = 'GAS'
     var bearerToken
     var userHash
-    var baseUrl = Cypress.env('baseURL')
+    var userData
+    var uuid
+    var ratePlanId = "052";
+    var billingCycleCode = "14";
+    var consumptionDataFilePath = 'cypress/dataGenerator/ameren/data/AMRG/historicalConsumption_Gas.csv';
+    var invoiceDataFilePath = 'cypress/dataGenerator/ameren/data/AMRG/historicalInvoice_Gas.csv';
+    var userDataFileName = "USERENROLL_D_" + utils.getCurrentDateRandomizer() + "1" + "_01.csv";
+    var meterDataFileName = "METERENROLL_D_" + utils.getCurrentDateRandomizer() + "2" + "_01.csv";
+    var consumptionDataFileName = "RAW_D_86400_S_" + utils.getCurrentDateRandomizer() + "1" + "_01.csv";
+    var invoiceDataFileName = "BILLING_" + utils.getCurrentDateRandomizer() + "_01.csv";
+    var dataStreamType = "AMR"
+    var dataGenerationInput = {
+        userFileName: userDataFileName,
+        meterFileName: meterDataFileName,
+        rawFileName: consumptionDataFileName,
+        invoiceFileName: invoiceDataFileName,
+        measurementType: strMeasurementType,
+        consumptionDataFilePath: consumptionDataFilePath,
+        invoiceDataFilePath: invoiceDataFilePath,
+        billingCycleCode: billingCycleCode,
+        ratePlanId: ratePlanId,
+        dataStreamType: dataStreamType,
+        pilotData: pilotData
+    }
 
     before(function () {
         cy.getAccessToken().then((token) => {
             bearerToken = token
             cy.log(bearerToken)
-            objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
-                cy.log(res.payload)
-                userHash = res.payload
+        })
+        cy.task('deleteFolder', Cypress.env('deleteFolder')).then(() => console.info("deleted successfully"));
+    })
+
+    it("Generate Data", () => {
+        userData = dataGenerator.createData(dataGenerationInput);
+    })
+
+    it("Fetch UUID", () => {
+        objApiResponse.fetchUUIDResponse(userData.contract_Id, userData.premise_Id, pilotData.pilotId, bearerToken)
+            .then((res) => {
+                cy.log(res)
+                uuid = res.split('/')[2]
             })
+    })
+
+    it("userHash generation", () => {
+        objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
+            cy.log(res.payload).debug()
+            userHash = res.payload
         })
     })
 
+    it("Visit ameren dashboard", () => {
+        let urlToLoad = `${pilotData.url}dashboard?user-hash=${userHash}`;
+        console.log(urlToLoad);
+        cy.forceVisit(urlToLoad);
+    })
+
     it("Invoice data API response", () => {
-        cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
-        cy.log(bearerToken)
         objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
             .then((res) => {
                 cy.log(res)

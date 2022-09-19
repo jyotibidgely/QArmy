@@ -2,7 +2,9 @@ import GBDownload from "../../../pageObjects/GBDownload"
 import genericPage from "../../../pageObjects/genericPage"
 import ApiResponse from "../../../pageObjects/ApiResponse"
 import DataGenerator from "../../../dataGenerator/ameren/dataGenerator/DataGenerator"
+import Utils from "../../../utils/Utils";
 const dataGenerator = new DataGenerator()
+const utils = new Utils();
 
 describe("GB download - AMI Electric", () => {
     const objGenericPage = new genericPage()
@@ -23,11 +25,33 @@ describe("GB download - AMI Electric", () => {
     var strMinDate
     var strObj = ''
     var meterToken
-    var strMeasurementType = 'ELECTRIC'
     var bearerToken
-    let userHash
-    let userData;
-    let uuid;
+    var userHash
+    var userData;
+    var uuid;
+    var ratePlanId = "052";
+    var billingCycleCode = "14";
+    var strMeasurementType = 'ELECTRIC'
+    var consumptionDataFilePath = 'cypress/dataGenerator/ameren/data/AMIE/amarenHistoricalConsumptionData.txt';
+    var invoiceDataFilePath = 'cypress/dataGenerator/ameren/data/AMIE/amarenHistoricalInvoiceData.txt';
+    var userDataFileName = "USERENROLL_D_" + utils.getCurrentDateRandomizer() + "_01.csv";
+    var meterDataFileName = "METERENROLL_D_" + utils.getCurrentDateRandomizer() + "_01.csv";
+    var consumptionDataFileName = "RAW_D_900_S_" + utils.getCurrentDateRandomizer() + "1" + "_01.csv";
+    var invoiceDataFileName = "BILLING_" + utils.getCurrentDateRandomizer() + "_01.csv";
+    var dataStreamType = "AMI"
+    var dataGenerationInput = {
+        userFileName: userDataFileName,
+        meterFileName: meterDataFileName,
+        rawFileName: consumptionDataFileName,
+        invoiceFileName: invoiceDataFileName,
+        measurementType: strMeasurementType,
+        consumptionDataFilePath: consumptionDataFilePath,
+        invoiceDataFilePath: invoiceDataFilePath,
+        billingCycleCode: billingCycleCode,
+        ratePlanId: ratePlanId,
+        dataStreamType: dataStreamType,
+        pilotData: pilotData
+    }
 
     before(function () {
         cy.getAccessToken().then((token) => {
@@ -38,7 +62,7 @@ describe("GB download - AMI Electric", () => {
     })
 
     it("Generate Data", () => {
-        userData = dataGenerator.createData();
+        userData = dataGenerator.createData(dataGenerationInput);
     })
 
     it("Fetch UUID", () => {
@@ -50,26 +74,18 @@ describe("GB download - AMI Electric", () => {
     })
 
     it("userHash generation", () => {
-        cy.wait(10000)
         objGenericPage.userHashApiResponse(uuid, pilotData.pilotId).then((res) => {
             cy.log(res.payload).debug()
             userHash = res.payload
-            cy.log('Hash - ' + userHash);
-            cy
         })
     })
 
     it("Visit ameren dashboard", () => {
-        cy.log('Hash - ' + userHash);
-        cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
+        let urlToLoad = `${pilotData.url}dashboard?user-hash=${userHash}`;
+        cy.forceVisit(urlToLoad);
     })
 
     it("Invoice data API response", () => {
-        cy.log('Hash - ' + userHash);
-        debugger;
-        cy.visit(pilotData.url + "dashboard?user-hash=" + userHash)
-        cy.log(bearerToken)
-        debugger;
         objApiResponse.invoiceDataResponse(uuid, strMeasurementType, bearerToken)
             .then((res) => {
                 cy.log(res)

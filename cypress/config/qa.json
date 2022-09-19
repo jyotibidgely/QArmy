@@ -5,14 +5,13 @@
         "clientSecret": "7tJPRBRLmTjaDt1Fjp9a",
         "ameren": {
             "url": "https://ameren-nonprodqa.bidgely.com/",
-            "pilotId": "10057"
+            "pilotId": "10057",
+            "bucket": "bidgely-amerenres-uat"
         },
         "scg": {
             "url": "https://scgnonprodqa.bidgely.com/",
             "pilotId": "10033"
         },
-        "CYPRESS_AWS_ACCESS_KEY_ID":"",
-        "CYPRESS_AWS_SECRET_ACCESS_KEY":"",
         "CYPRESS_AWS_DEFAULT_REGION":"us-west-2",
         "deleteFolder": "cypress/temp"
     }

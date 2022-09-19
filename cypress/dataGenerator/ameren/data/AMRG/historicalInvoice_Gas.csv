@@ -1,0 +1,126 @@
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-10-28|2020-12-02|33||TOTAL|65|64.80|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-10-28|2020-12-02|33||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-10-28|2020-12-02|33|PGA System|CONSUMPTION_BASED|0|24.36|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-10-28|2020-12-02|33|Adjustments|OTHER|0|0.96|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-10-28|2020-12-02|33|System Gas|CONSUMPTION_BASED|65|20.38|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-10-28|2020-12-02|33|Taxes|OTHER|0|4.10|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-12-02|2021-01-05|34|System Gas|CONSUMPTION_BASED|117|36.69|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-12-02|2021-01-05|34|PGA System|CONSUMPTION_BASED|0|44.03|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-12-02|2021-01-05|34||TOTAL|117|104.17|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-12-02|2021-01-05|34|Adjustments|OTHER|0|1.85|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-12-02|2021-01-05|34|Taxes|OTHER|0|6.60|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2020-12-02|2021-01-05|34||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-01-05|2021-02-03|29||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-01-05|2021-02-03|29|Taxes|OTHER|0|6.17|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-01-05|2021-02-03|29|Adjustments|OTHER|0|1.71|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-01-05|2021-02-03|29|System Gas|CONSUMPTION_BASED|108|33.87|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-01-05|2021-02-03|29|PGA System|CONSUMPTION_BASED|0|40.64|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-01-05|2021-02-03|29||TOTAL|108|97.39|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-03|2021-02-24|21|Taxes|OTHER|0|6.01|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-03|2021-02-24|21|PGA System|CONSUMPTION_BASED|0|41.77|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-03|2021-02-24|21||OTHER|0|10.50|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-03|2021-02-24|21|Adjustments|OTHER|0|1.75|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-03|2021-02-24|21|System Gas|CONSUMPTION_BASED|111|34.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-03|2021-02-24|21||TOTAL|111|94.84|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-24|2021-03-25|29||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-24|2021-03-25|29|System Gas|CONSUMPTION_BASED|53|16.62|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-24|2021-03-25|29||TOTAL|53|55.95|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-24|2021-03-25|29|Adjustments|OTHER|0|0.84|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-24|2021-03-25|29|PGA System|CONSUMPTION_BASED|0|19.94|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-02-24|2021-03-25|29|Taxes|OTHER|0|3.55|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-03-25|2021-04-23|29|Taxes|OTHER|0|2.52|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-03-25|2021-04-23|29||TOTAL|29|39.83|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-03-25|2021-04-23|29||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-03-25|2021-04-23|29|System Gas|CONSUMPTION_BASED|29|9.09|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-03-25|2021-04-23|29|Adjustments|OTHER|0|0.46|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-03-25|2021-04-23|29|PGA System|CONSUMPTION_BASED|0|12.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-04-23|2021-05-24|31||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-04-23|2021-05-24|31||TOTAL|18|31.18|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-04-23|2021-05-24|31|PGA System|CONSUMPTION_BASED|0|8.28|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-04-23|2021-05-24|31|System Gas|CONSUMPTION_BASED|18|5.64|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-04-23|2021-05-24|31|Adjustments|OTHER|0|0.28|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-04-23|2021-05-24|31|Taxes|OTHER|0|1.98|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-05-24|2021-06-23|30|System Gas|CONSUMPTION_BASED|14|4.39|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-05-24|2021-06-23|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-05-24|2021-06-23|30|PGA System|CONSUMPTION_BASED|0|6.44|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-05-24|2021-06-23|30|Adjustments|OTHER|0|0.22|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-05-24|2021-06-23|30||TOTAL|14|27.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-05-24|2021-06-23|30|Taxes|OTHER|0|1.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-06-23|2021-07-23|30|Adjustments|OTHER|0|0.19|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-06-23|2021-07-23|30|Taxes|OTHER|0|1.66|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-06-23|2021-07-23|30|PGA System|CONSUMPTION_BASED|0|5.52|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-06-23|2021-07-23|30|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-06-23|2021-07-23|30||TOTAL|12|26.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-06-23|2021-07-23|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-07-23|2021-08-21|29|Taxes|OTHER|0|1.66|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-07-23|2021-08-21|29|Adjustments|OTHER|0|0.19|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-07-23|2021-08-21|29|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-07-23|2021-08-21|29||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-07-23|2021-08-21|29|PGA System|CONSUMPTION_BASED|0|5.52|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-07-23|2021-08-21|29||TOTAL|12|26.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-08-21|2021-09-24|34||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-08-21|2021-09-24|34|Taxes|OTHER|0|1.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-08-21|2021-09-24|34||TOTAL|14|27.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-08-21|2021-09-24|34|Adjustments|OTHER|0|0.22|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-08-21|2021-09-24|34|PGA System|CONSUMPTION_BASED|0|6.44|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-08-21|2021-09-24|34|System Gas|CONSUMPTION_BASED|14|4.39|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-09-24|2021-10-21|27|Taxes|OTHER|0|1.61|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-09-24|2021-10-21|27|Adjustments|OTHER|0|0.17|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-09-24|2021-10-21|27||TOTAL|11|25.29|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-09-24|2021-10-21|27|PGA System|CONSUMPTION_BASED|0|5.06|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-09-24|2021-10-21|27|System Gas|CONSUMPTION_BASED|11|3.45|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-09-24|2021-10-21|27||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-10-21|2021-11-20|30|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-10-21|2021-11-20|30|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-10-21|2021-11-20|30|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-10-21|2021-11-20|30|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-10-21|2021-11-20|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-10-21|2021-11-20|30||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-11-20|2021-12-31|30|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-11-20|2021-12-31|30|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-11-20|2021-12-31|30|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-11-20|2021-12-31|30|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-11-20|2021-12-31|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-11-20|2021-12-31|30||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-12-31|2022-01-16|30|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-12-31|2022-01-16|30|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-12-31|2022-01-16|30|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-12-31|2022-01-16|30|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-12-31|2022-01-16|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2021-12-31|2022-01-16|30||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-01-16|2022-02-18|30|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-01-16|2022-02-18|30|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-01-16|2022-02-18|30|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-01-16|2022-02-18|30|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-01-16|2022-02-18|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-01-16|2022-02-18|30||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-02-18|2022-03-19|30|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-02-18|2022-03-19|30|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-02-18|2022-03-19|30|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-02-18|2022-03-19|30|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-02-18|2022-03-19|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-02-18|2022-03-19|30||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-03-19|2022-04-19|31|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-03-19|2022-04-19|31|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-03-19|2022-04-19|31|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-03-19|2022-04-19|31|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-03-19|2022-04-19|31||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-03-19|2022-04-19|31||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-04-19|2022-05-19|30|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-04-19|2022-05-19|30|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-04-19|2022-05-19|30|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-04-19|2022-05-19|30|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-04-19|2022-05-19|30||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-04-19|2022-05-19|30||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-05-19|2022-06-19|31|Taxes|OTHER|0|1.81|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-05-19|2022-06-19|31|Adjustments|OTHER|0|0.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-05-19|2022-06-19|31|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-05-19|2022-06-19|31|PGA System|CONSUMPTION_BASED|0|7.89|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-05-19|2022-06-19|31||OTHER|0|15.00|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-05-19|2022-06-19|31||TOTAL|12|28.59|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-06-19|2022-07-19|31|Adjustments|OTHER|0|0.19|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-06-19|2022-07-19|31|Taxes|OTHER|0|1.66|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-06-19|2022-07-19|31|PGA System|CONSUMPTION_BASED|0|5.52|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-06-19|2022-07-19|31|System Gas|CONSUMPTION_BASED|12|3.76|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-06-19|2022-07-19|31||TOTAL|12|26.13|AMR|
+customerId|contractId|premiseId|dataStreamId|GAS|20|2022-06-19|2022-07-19|31||OTHER|0|15.00|AMR|

@@ -17,7 +17,7 @@
  */
 // eslint-disable-next-line no-unused-vars
 const path = require("path");
-const aws = require('aws-sdk');
+const aws = require("aws-sdk");
 const fsExtra = require("fs-extra");
 const { downloadFile } = require('cypress-downloadfile/lib/addPlugin')
 const fs = require('fs');
@@ -70,18 +70,17 @@ module.exports = (on, config) => {
   })
 
   on('task', {
-    readAWSCreds: () => {
-      debugger;
-      var diskProvider = new aws.FileSystemCredentials('~/.aws/credentials');
-      var chain = new aws.CredentialProviderChain();
-      chain.providers.push(diskProvider);
-      chain.resolve();
+    readCredentials: (profile) => {
+      let credentials = new aws.SharedIniFileCredentials({ profile: profile });
+      return {
+        accessKeyId: credentials.accessKeyId,
+        secretAccessKey: credentials.secretAccessKey
+      };
     }
   })
 
   on('task', {
     deleteFolder(folderName) {
-      debugger;
       if (fs.existsSync(folderName)) {
         fs.rmSync(folderName, { recursive: true, force: true })
       }
