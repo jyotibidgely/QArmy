@@ -12,7 +12,6 @@
             "url": "https://scgnonprodqa.bidgely.com/",
             "pilotId": "10033"
         },
-        "CYPRESS_AWS_DEFAULT_REGION":"us-west-2",
         "deleteFolder": "cypress/temp"
     }
   }
