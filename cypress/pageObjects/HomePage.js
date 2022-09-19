@@ -3,6 +3,7 @@ class HomePage {
     homepageEle = '.home-page-main'
     energyBreakdownSection = '.app-breakdown-container'
     energyBreakdownHeaderSection = '.app-breakdown-header-container'
+    energyChartTooltipText = '.highcharts-label.highcharts-tooltip text'
 
     homePageLoaded() {
         cy.get(this.homepageEle, {timeout:10000}).should('be.visible')
