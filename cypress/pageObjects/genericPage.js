@@ -26,7 +26,7 @@ class genericPage {
     clickNavBarTabs(strTab) {
         var ele = this.navBarTab.replace(/%s/, strTab)
         cy.log(ele)
-        cy.get(this.headerContainer, {timeout:10000}).find(ele).click()
+        cy.get(this.headerContainer, { timeout: 10000 }).find(ele).click()
     }
 
     clickMenuBtn() {
@@ -45,7 +45,7 @@ class genericPage {
     }
 
     checkFuelLabel(strFuelType) {
-        cy.get(this.fuelLabel, {timeout:30000}).should('have.text', strFuelType)
+        cy.get(this.fuelLabel, { timeout: 30000 }).should('have.text', strFuelType)
     }
 
     clickCancelIcon() {

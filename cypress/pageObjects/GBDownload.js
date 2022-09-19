@@ -21,7 +21,7 @@ class GBDownload {
     }
 
     verifySubtitle() {
-        cy.get(this.subTitle, {timeout:10000}).should('have.text', 'Select the time period:')
+        cy.get(this.subTitle, { timeout: 10000 }).should('have.text', 'Select the time period:')
     }
 
     verifyExportBillLabel() {
@@ -43,7 +43,7 @@ class GBDownload {
     }
 
     clickExport() {
-        cy.get(this.exportBtn,{timeout:10000}).click()
+        cy.get(this.exportBtn, { timeout: 10000 }).click()
     }
 
     clickCancelBtn() {
@@ -51,7 +51,7 @@ class GBDownload {
     }
 
     checkSuccessMsg(successMsg) {
-        cy.get(this.gbDownloadMsg,{timeout:10000}).should('have.text', successMsg)
+        cy.get(this.gbDownloadMsg, { timeout: 10000 }).should('have.text', successMsg)
     }
 
     enterFromDate(strFromDate) {

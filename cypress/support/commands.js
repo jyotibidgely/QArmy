@@ -155,3 +155,9 @@ Cypress.Commands.add('deleteDownloadsFolder', () => {
   const downloadsFolder = Cypress.config('downloadsFolder')
   cy.task('deleteFolder', downloadsFolder)
 })
+
+Cypress.Commands.add('forceVisit', url => {
+  cy.window().then(win => {
+    return win.open(url, '_self');
+  });
+});

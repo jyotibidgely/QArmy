@@ -5,11 +5,13 @@
         "clientSecret": "7tJPRBRLmTjaDt1Fjp9a",
         "ameren": {
             "url": "https://ameren-nonprodqa.bidgely.com/",
-            "pilotId": "10057"
+            "pilotId": "10057",
+            "bucket": "bidgely-amerenres-uat"
         },
         "scg": {
             "url": "https://scgnonprodqa.bidgely.com/",
             "pilotId": "10033"
-        }
+        },
+        "deleteFolder": "cypress/temp"
     }
   }

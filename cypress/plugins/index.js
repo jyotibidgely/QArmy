@@ -17,10 +17,12 @@
  */
 // eslint-disable-next-line no-unused-vars
 const path = require("path");
+const aws = require("aws-sdk");
 const fsExtra = require("fs-extra");
-const {downloadFile} = require('cypress-downloadfile/lib/addPlugin')
+const { downloadFile } = require('cypress-downloadfile/lib/addPlugin')
 const fs = require('fs');
-const { rmdir } = require('fs')
+const { rmdir } = require('fs');
+const { replaceInFile } = require('replace-in-file');
 
 function getConfigurationByFile(file) {
   const pathToConfigFile = path.resolve("cypress/config", `${file}.json`);
@@ -38,27 +40,51 @@ module.exports = (on, config) => {
     },
   })
 
-  on('task', {downloadFile})
+  on('task', { downloadFile })
 
   on('task', {
-    downloads:  (downloadspath) => {
+    downloads: (downloadspath) => {
       return fs.readdirSync(downloadspath)
     }
   })
 
   on('task', {
-    deleteFolder(folderName) {
-      console.log('deleting folder %s', folderName)
+    replaceString: (options) => {
+      debugger;
+      const regEx = new RegExp(options.from, "g");
+      const replaceStringParams = {
+        files: options.files,
+        from: regEx,
+        to: options.to
+      };
 
-      return new Promise((resolve, reject) => {
-        rmdir(folderName, { maxRetries: 10, recursive: true }, (err) => {
-          if (err) {
-            console.error(err)
-            return reject(err)
-          }
-          resolve(null)
-        })
-      })
+      return replaceInFile(replaceStringParams);
+
+    }
+  })
+
+  on('task', {
+    readFile: (filePath) => {
+      return (fs.readFileSync(filePath))
+    }
+  })
+
+  on('task', {
+    readCredentials: (profile) => {
+      let credentials = new aws.SharedIniFileCredentials({ profile: profile });
+      return {
+        accessKeyId: credentials.accessKeyId,
+        secretAccessKey: credentials.secretAccessKey
+      };
+    }
+  })
+
+  on('task', {
+    deleteFolder(folderName) {
+      if (fs.existsSync(folderName)) {
+        fs.rmSync(folderName, { recursive: true, force: true })
+      }
+      return true;
     },
   })
 

@@ -5,11 +5,13 @@
         "clientSecret": "JxgsY4qv",
         "ameren": {
             "url": "http://amerenuat.bidgely.com/",
-            "pilotId": "10057"
+            "pilotId": "10057",
+            "bucket": "bidgely-ameren-uat/RES/Incoming"
         },
         "scg": {
             "url": "https://scguat.bidgely.com/",
             "pilotId": "10033"
-        }
+        },
+        "deleteFolder": "cypress/temp"
     }
   }
